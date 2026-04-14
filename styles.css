@@ -987,6 +987,65 @@ a {
   align-items: center;
 }
 
+.footer-responsible {
+  grid-column: 1 / -1;
+  padding-top: 1.8rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.responsible-card {
+  padding: 1rem 1.2rem;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.responsible-title {
+  margin: 0 0 0.5rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.52);
+}
+
+.responsible-name {
+  margin: 0 0 0.3rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.responsible-role {
+  margin: 0 0 0.8rem;
+  font-size: 0.92rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.responsible-crea {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.crea-label {
+  font-size: 0.7rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.48);
+}
+
+.crea-number {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
 .reveal {
   opacity: 0;
   transform: translateY(24px);
