@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>InovaScript | Soluções sob medida para indústria</title>
+    <meta
+      name="description"
+      content="A InovaScript cria soluções sob medida para pequenas e médias empresas: controle de estoque, automação de etiquetas, CRM, manutenção, integrações fabris e sites profissionais."
+    />
+    <link rel="preload" href="./assets/hero-factory.jpg" as="image" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="#top" aria-label="InovaScript">
+          <img
+            class="brand-symbol"
+            src="./assets/brand-symbol.png"
+            alt=""
+            aria-hidden="true"
+          />
+          <span class="brand-text">
+            <strong>InovaScript</strong>
+            <span data-i18n="brand.tagline">Soluções industriais sob medida</span>
+          </span>
+        </a>
+
+        <div class="header-panel" id="header-panel">
+          <nav class="site-nav" aria-label="Principal">
+            <a class="nav-link" href="#empresa" data-i18n="nav.company">Empresa</a>
+            <a class="nav-link" href="#solucoes" data-i18n="nav.solutions">Soluções</a>
+            <a class="nav-link" href="#metodo" data-i18n="nav.process">Como atuamos</a>
+            <a class="nav-link" href="#case" data-i18n="nav.case">Case</a>
+            <a class="nav-link" href="#contato" data-i18n="nav.contact">Contato</a>
+          </nav>
+
+          <div class="site-controls">
+            <div class="lang-switch" role="group" aria-label="Language selector">
+              <button class="lang-button is-active" type="button" data-lang-choice="pt">
+                <span aria-hidden="true">🇧🇷</span>
+                <span>PT</span>
+              </button>
+              <button class="lang-button" type="button" data-lang-choice="en">
+                <span aria-hidden="true">🇺🇸</span>
+                <span>EN</span>
+              </button>
+            </div>
+
+            <button class="theme-toggle" type="button" data-theme-toggle data-i18n="controls.theme">
+              Tema escuro
+            </button>
+
+            <a
+              class="nav-cta"
+              href="https://wa.me/5511994529009?text=Ol%C3%A1%2C%20quero%20conhecer%20as%20solu%C3%A7%C3%B5es%20da%20InovaScript."
+              target="_blank"
+              rel="noreferrer"
+              data-i18n="nav.whatsapp"
+            >
+              WhatsApp
+            </a>
+          </div>
+        </div>
+
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="header-panel"
+          data-i18n="controls.menu"
+        >
+          Menu
+        </button>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="hero-media" aria-hidden="true"></div>
+        <canvas class="hero-canvas" aria-hidden="true"></canvas>
+        <div class="hero-scan" aria-hidden="true"></div>
+
+        <div class="container hero-shell">
+          <div class="hero-content">
+            <p class="eyebrow reveal" data-i18n="hero.eyebrow">Consultoria e software para indústria</p>
+            <h1 class="reveal" data-i18n="hero.title">
+              Sua operação precisa de um sistema que entenda o processo real da
+              empresa.
+            </h1>
+            <p class="hero-copy reveal" data-i18n="hero.copy">
+              A InovaScript desenvolve soluções personalizadas para pequenas e
+              médias empresas, sempre com foco industrial: controle de estoque,
+              automação de etiquetas, manutenção, CRM, integrações fabris e sites
+              profissionais.
+            </p>
+
+            <div class="hero-actions reveal">
+              <a
+                class="button button-primary"
+                href="https://wa.me/5511994529009?text=Ol%C3%A1%2C%20quero%20falar%20sobre%20um%20projeto%20sob%20medida."
+                target="_blank"
+                rel="noreferrer"
+                data-i18n="hero.ctaPrimary"
+              >
+                Falar no WhatsApp
+              </a>
+              <a class="button button-secondary" href="#solucoes" data-i18n="hero.ctaSecondary">
+                Ver soluções
+              </a>
+            </div>
+
+            <div class="hero-proof reveal">
+              <span data-i18n="hero.proofLabel">Projeto industrial em operação</span>
+              <strong data-i18n="hero.proofValue">Fluxo completo com estoque, produção e automação de etiquetas</strong>
+            </div>
+
+            <ul class="hero-list reveal">
+              <li data-i18n="hero.bullet1">Começamos com videoconferência para entender o processo real</li>
+              <li data-i18n="hero.bullet2">Diagnóstico técnico antes do desenvolvimento</li>
+              <li data-i18n="hero.bullet3">Software sob medida para o ritmo da operação</li>
+              <li data-i18n="hero.bullet4">Equipe com engenharia, elétrica, mecânica e programação</li>
+            </ul>
+          </div>
+
+          <aside class="hero-telemetry reveal" aria-label="Rotina de criação">
+            <article class="telemetry-row">
+              <span class="telemetry-code">DIAG-01</span>
+              <strong data-i18n="telemetry.diagTitle">Videoconferência de diagnóstico</strong>
+              <small data-i18n="telemetry.diagDesc">Entendimento do processo, gargalos e rotina da operação.</small>
+            </article>
+            <article class="telemetry-row">
+              <span class="telemetry-code">FLOW-02</span>
+              <strong data-i18n="telemetry.flowTitle">Mapeamento do fluxo completo</strong>
+              <small data-i18n="telemetry.flowDesc">Produção, estoque, inspeção, matéria-prima e expedição.</small>
+            </article>
+            <article class="telemetry-row">
+              <span class="telemetry-code">BUILD-03</span>
+              <strong data-i18n="telemetry.buildTitle">Implantação sob medida</strong>
+              <small data-i18n="telemetry.buildDesc">Sistema ajustado ao dia a dia e preparado para evoluir.</small>
+            </article>
+          </aside>
+        </div>
+
+        <a class="hero-scroll" href="#solucoes" data-i18n="hero.scroll">Role e veja como trabalhamos</a>
+      </section>
+
+      <section class="signal-strip" aria-label="Soluções da InovaScript">
+        <div class="signal-track">
+          <span data-signal-index="0">Controle de estoque</span>
+          <span data-signal-index="1">Automação de etiquetas</span>
+          <span data-signal-index="2">CRM personalizado</span>
+          <span data-signal-index="3">Controle de manutenção</span>
+          <span data-signal-index="4">Integração de fluxo fabril</span>
+          <span data-signal-index="5">Sites profissionais</span>
+          <span data-signal-index="6">Dashboards operacionais</span>
+          <span data-signal-index="7">Controle de estoque</span>
+          <span data-signal-index="8">Automação de etiquetas</span>
+          <span data-signal-index="9">CRM personalizado</span>
+          <span data-signal-index="10">Controle de manutenção</span>
+          <span data-signal-index="11">Integração de fluxo fabril</span>
+          <span data-signal-index="12">Sites profissionais</span>
+          <span data-signal-index="13">Dashboards operacionais</span>
+        </div>
+      </section>
+
+      <section class="section section-light company-section" id="empresa">
+        <div class="container company-grid">
+          <div class="company-copy reveal">
+            <p class="eyebrow eyebrow-dark" data-i18n="company.eyebrow">Empresa brasileira</p>
+            <h2 data-i18n="company.title">A InovaScript nasceu no Brasil para transformar processo em solução sob medida.</h2>
+            <p data-i18n="company.copy1">
+              Somos uma empresa brasileira pensada para diagnosticar a rotina, entender a necessidade da operação e transformar isso em sistema, automação e ferramenta útil de verdade.
+            </p>
+            <p data-i18n="company.copy2">
+              Não trabalhamos com código genérico empurrado para qualquer cenário. Entramos para compreender a realidade da empresa e construir uma solução personalizada, com visão técnica, proximidade e responsabilidade na entrega.
+            </p>
+          </div>
+
+          <div class="company-side reveal">
+            <div class="company-media-grid">
+              <figure class="company-photo company-photo-wide">
+                <img src="./assets/fachada.png" alt="Equipe da InovaScript em frente à empresa" />
+              </figure>
+              <figure class="company-photo">
+                <img src="./assets/escritorio.png" alt="Equipe da InovaScript no escritório" />
+              </figure>
+              <figure class="company-photo">
+                <img src="./assets/trabalhando.png" alt="Equipe da InovaScript trabalhando em software" />
+              </figure>
+            </div>
+
+            <div class="company-panels">
+              <article class="company-panel">
+                <span class="company-panel-label" data-i18n="company.panel1Label">Origem</span>
+                <strong data-i18n="company.panel1Title">Empresa brasileira com foco industrial</strong>
+                <p data-i18n="company.panel1Desc">Criada para atender pequenas e médias empresas que precisam organizar operação, informação e crescimento.</p>
+              </article>
+
+              <article class="company-panel">
+                <span class="company-panel-label" data-i18n="company.panel2Label">Abordagem</span>
+                <strong data-i18n="company.panel2Title">Consultoria antes de desenvolvimento</strong>
+                <p data-i18n="company.panel2Desc">Entendemos processo, gargalo e rotina antes de definir tela, fluxo, impressão ou integração.</p>
+              </article>
+
+              <article class="company-panel">
+                <span class="company-panel-label" data-i18n="company.panel3Label">Entrega</span>
+                <strong data-i18n="company.panel3Title">Software e automação com aplicação real</strong>
+                <p data-i18n="company.panel3Desc">Sites profissionais, controle de estoque, manutenção, CRM, integração fabril e soluções feitas para o uso diário.</p>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-light" id="solucoes">
+        <div class="container">
+          <div class="section-heading reveal">
+            <p class="eyebrow eyebrow-dark" data-i18n="solutions.eyebrow">O que entregamos</p>
+            <h2 data-i18n="solutions.title">Soluções que acompanham a rotina da sua empresa</h2>
+            <p data-i18n="solutions.copy">
+              Cada projeto nasce da necessidade real da operação. Nada de pacote
+              genérico. O foco é organizar fluxo, reduzir atrito e dar clareza
+              para quem precisa produzir, vender, manter e entregar.
+            </p>
+          </div>
+
+          <div class="services-grid">
+            <article class="service reveal">
+              <span class="service-index">01</span>
+              <h3 data-i18n="services.inventoryTitle">Controle de estoque</h3>
+              <p data-i18n="services.inventoryDesc">
+                Entradas, saídas, rastreabilidade, localização de itens e visão
+                do estoque em tempo real.
+              </p>
+            </article>
+
+            <article class="service reveal">
+              <span class="service-index">02</span>
+              <h3 data-i18n="services.labelsTitle">Automação de etiquetas</h3>
+              <p data-i18n="services.labelsDesc">
+                Geração e impressão integradas ao processo para reduzir retrabalho
+                e ganhar velocidade na expedição.
+              </p>
+            </article>
+
+            <article class="service reveal">
+              <span class="service-index">03</span>
+              <h3 data-i18n="services.maintenanceTitle">Controle de manutenção</h3>
+              <p data-i18n="services.maintenanceDesc">
+                Histórico de equipamentos, ordens de serviço, programação e
+                acompanhamento do que não pode parar.
+              </p>
+            </article>
+
+            <article class="service reveal">
+              <span class="service-index">04</span>
+              <h3 data-i18n="services.crmTitle">CRM de vendas personalizado</h3>
+              <p data-i18n="services.crmDesc">
+                Funil comercial ajustado ao jeito da sua equipe vender, sem
+                excesso de tela e sem processo engessado.
+              </p>
+            </article>
+
+            <article class="service reveal">
+              <span class="service-index">05</span>
+              <h3 data-i18n="services.flowTitle">Integração de fluxo fabril</h3>
+              <p data-i18n="services.flowDesc">
+                Produção, almoxarifado, expedição e indicadores conectados para
+                o dado circular onde faz diferença.
+              </p>
+            </article>
+
+            <article class="service reveal">
+              <span class="service-index">06</span>
+              <h3 data-i18n="services.sitesTitle">Sites profissionais</h3>
+              <p data-i18n="services.sitesDesc">
+                Presença digital séria, clara e alinhada à autoridade técnica da
+                empresa para vender melhor.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+      <section class="section section-contrast" id="metodo">
+        <div class="container method-grid">
+          <div class="method-copy reveal">
+            <p class="eyebrow" data-i18n="process.eyebrow">Como atuamos</p>
+            <h2 data-i18n="process.title">Começamos por videoconferência e desenhamos a solução em cima do processo real.</h2>
+            <p data-i18n="process.copy1">
+              Nossa equipe reúne engenheiros, profissionais de elétrica,
+              mecânica e programadores para entender a operação a fundo antes de
+              desenhar qualquer tela.
+            </p>
+            <p data-i18n="process.copy2">
+              Falamos com quem compra, produz, separa, mantém, etiqueta, expede
+              e vende. A solução só faz sentido quando cabe no dia a dia da
+              empresa.
+            </p>
+          </div>
+
+          <div class="method-steps">
+            <article class="step reveal">
+              <span>1</span>
+              <div>
+                <h3 data-i18n="process.step1Title">Videoconferência de entendimento</h3>
+                <p data-i18n="process.step1Desc">
+                  Começamos com uma conversa técnica para mapear rotina,
+                  gargalos, decisões e pontos de perda da operação.
+                </p>
+              </div>
+            </article>
+
+            <article class="step reveal">
+              <span>2</span>
+              <div>
+                <h3 data-i18n="process.step2Title">Mapeamento do fluxo completo</h3>
+                <p data-i18n="process.step2Desc">
+                  Estruturamos fluxo, permissões, telas, impressões e integrações
+                  com foco no uso real da empresa.
+                </p>
+              </div>
+            </article>
+
+            <article class="step reveal">
+              <span>3</span>
+              <div>
+                <h3 data-i18n="process.step3Title">Implantação acompanhada</h3>
+                <p data-i18n="process.step3Desc">
+                  Ajustamos o sistema junto com a equipe para a entrega acontecer
+                  com clareza, segurança e velocidade.
+                </p>
+              </div>
+            </article>
+
+            <article class="step reveal">
+              <span>4</span>
+              <div>
+                <h3 data-i18n="process.step4Title">Evolução contínua</h3>
+                <p data-i18n="process.step4Desc">
+                  O projeto pode crescer com novos módulos, relatórios e etapas
+                  conforme a operação amadurece.
+                </p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-light case-section" id="case">
+        <div class="container case-grid">
+          <div class="case-copy reveal">
+            <p class="eyebrow eyebrow-dark" data-i18n="case.eyebrow">Case de sucesso</p>
+            <h2 data-i18n="case.title">Fluxo completo implantado em operação real</h2>
+            <p data-i18n="case.copy1">
+              Em um dos projetos em operação, estruturamos um fluxo completo para uma indústria brasileira, indo muito além de um controle simples ou de uma automação isolada.
+            </p>
+            <p data-i18n="case.copy2">
+              A solução conectou etapas, organizou informação e colocou a tecnologia a favor da rotina da fábrica, com visão operacional de ponta a ponta.
+            </p>
+            <div class="case-tags">
+              <span data-i18n="case.tag1">Fluxo completo implantado</span>
+              <span data-i18n="case.tag2">Operação conectada</span>
+              <span data-i18n="case.tag3">Base pronta para evoluir</span>
+            </div>
+          </div>
+
+          <figure class="case-visual reveal">
+            <img
+              src="./assets/engineer-floor.jpg"
+              alt="Ambiente industrial com operador e equipamento de grande porte"
+            />
+          </figure>
+        </div>
+
+        <div class="case-scope reveal">
+          <p class="scope-title" data-i18n="case.scopeTitle">Resumo do case</p>
+          <p class="scope-summary" data-i18n="case.scopeSummary">
+            Esse case é da SAFISA Servo Embreagem. De forma resumida, estruturamos um fluxo completo para produção, estoques por etapa e automação de etiqueta dentro da rotina real da empresa.
+          </p>
+          <div class="scope-grid">
+            <span data-i18n="case.scope1">Ordem de produção</span>
+            <span data-i18n="case.scope2">Produção</span>
+            <span data-i18n="case.scope3">Controle de matéria-prima</span>
+            <span data-i18n="case.scope4">Controle de almoxarifado</span>
+            <span data-i18n="case.scope5">Estoque de montagem</span>
+            <span data-i18n="case.scope6">Estoque de inspeção</span>
+            <span data-i18n="case.scope7">Tratamentos externos</span>
+            <span data-i18n="case.scope8">Controle de estoque</span>
+            <span data-i18n="case.scope9">Automação da etiqueta</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="industry-band">
+        <div class="industry-image" aria-hidden="true"></div>
+        <div class="industry-overlay"></div>
+        <div class="container industry-content">
+          <p class="eyebrow reveal" data-i18n="industry.eyebrow">Foco industrial</p>
+          <h2 class="reveal" data-i18n="industry.title">
+            Quem vive chão de fábrica, manutenção e expedição precisa de software
+            que fale a mesma língua.
+          </h2>
+          <p class="reveal" data-i18n="industry.copy">
+            A InovaScript entra para entender o cenário, traduzir a necessidade e
+            transformar isso em uma ferramenta personalizada, objetiva e pronta
+            para crescer com a empresa.
+          </p>
+          <ul class="industry-list reveal">
+            <li data-i18n="industry.item1">Produção</li>
+            <li data-i18n="industry.item2">Manutenção</li>
+            <li data-i18n="industry.item3">Almoxarifado</li>
+            <li data-i18n="industry.item4">Expedição</li>
+            <li data-i18n="industry.item5">Comercial</li>
+            <li data-i18n="industry.item6">Gestão</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section section-light pricing-section">
+        <div class="container pricing-grid">
+          <div class="pricing-copy reveal">
+            <p class="eyebrow eyebrow-dark" data-i18n="pricing.eyebrow">Condição comercial</p>
+            <h2 data-i18n="pricing.title">Projeto sob medida com valor acessível e proposta competitiva.</h2>
+            <p data-i18n="pricing.copy1">
+              Trabalhamos para entregar uma condição viável para pequenas e
+              médias empresas, com negociação direta e proposta construída em
+              cima da realidade da operação.
+            </p>
+            <p data-i18n="pricing.copy2">
+              Já tem uma oferta em mãos? Traga para a conversa. Nosso objetivo é
+              montar a solução mais forte possível dentro da melhor condição.
+            </p>
+          </div>
+
+          <div class="pricing-panel reveal">
+            <img src="./assets/aperto-de-mao.png" alt="Parceria comercial da InovaScript com cliente" />
+            <div class="pricing-panel-copy">
+              <strong data-i18n="pricing.panelTitle">Parceria próxima do início à implantação</strong>
+              <p data-i18n="pricing.panelCopy">
+                Proposta clara, atendimento próximo e solução personalizada para a realidade da empresa.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-cta" id="contato">
+        <div class="container cta-block">
+          <p class="eyebrow reveal" data-i18n="cta.eyebrow">Vamos conversar</p>
+          <h2 class="reveal" data-i18n="cta.title">
+            Me conta o que trava a sua operação hoje e eu transformo isso em um
+            projeto claro.
+          </h2>
+          <p class="reveal" data-i18n="cta.copy">
+            Atendimento direto pelo WhatsApp para entender sua empresa, avaliar o
+            cenário atual e desenhar a solução certa.
+          </p>
+          <div class="cta-actions reveal">
+            <a
+              class="button button-primary"
+              href="https://wa.me/5511994529009?text=Ol%C3%A1%2C%20quero%20uma%20proposta%20da%20InovaScript."
+              target="_blank"
+              rel="noreferrer"
+              data-i18n="cta.button"
+            >
+              Chamar no WhatsApp
+            </a>
+            <a class="contact-phone" href="tel:+5511994529009">11 99452-9009</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div>
+          <strong>InovaScript</strong>
+          <p data-i18n="footer.copy">Soluções personalizadas para indústria e empresas em crescimento.</p>
+        </div>
+
+        <div class="footer-links">
+          <a href="#empresa" data-i18n="nav.company">Empresa</a>
+          <a href="#solucoes" data-i18n="nav.solutions">Soluções</a>
+          <a href="#metodo" data-i18n="nav.process">Como atuamos</a>
+          <a href="#case" data-i18n="nav.case">Case</a>
+          <a href="#contato" data-i18n="nav.contact">Contato</a>
+        </div>
+      </div>
+    </footer>
+
+    <script src="./script.js"></script>
+    </body>
+</html>
