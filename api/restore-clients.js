@@ -9,6 +9,8 @@ const getBearerToken = (authorization = "") => {
   return type?.toLowerCase() === "bearer" && token ? token : null;
 };
 
+const isAdminRole = (role) => ["admin", "administrador"].includes(String(role || "").toLowerCase());
+
 const supabaseRequest = async (path, options = {}) => {
   const supabaseUrl = process.env.SUPABASE_URL;
   const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -64,7 +66,7 @@ const ensureAdmin = async (userId) => {
   );
 
   const profile = Array.isArray(profiles) ? profiles[0] : null;
-  if (!profile || profile.role !== "admin" || profile.ativo === false) {
+  if (!profile || !isAdminRole(profile.role) || profile.ativo === false) {
     throw Object.assign(new Error("Apenas administradores podem restaurar clientes."), { status: 403 });
   }
 };

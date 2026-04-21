@@ -25,6 +25,7 @@ const loginMessage = document.querySelector("[data-client-login-message]");
 const openLoginButtons = document.querySelectorAll("[data-open-client-login]");
 const closeLoginButtons = document.querySelectorAll("[data-close-client-login]");
 const forgotPasswordButton = document.querySelector("[data-forgot-password]");
+const isAdminRole = (role) => ["admin", "administrador"].includes(String(role || "").toLowerCase());
 
 if (loginModal && loginForm) {
   const setMessage = (text, tone = "info") => {
@@ -89,7 +90,7 @@ if (loginModal && loginForm) {
       .eq("id", user.id)
       .single();
 
-    window.location.href = data?.role === "admin" ? "./admin.html" : "./portal.html";
+    window.location.href = isAdminRole(data?.role) ? "./admin.html" : "./portal.html";
   };
 
   openLoginButtons.forEach((button) => {

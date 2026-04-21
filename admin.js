@@ -137,6 +137,7 @@ const formatDate = (value) => {
 const toInputDate = (value) => (value ? String(value).slice(0, 10) : "");
 const getLabel = (map, key) => map[key] || "Nao definido";
 const getTone = (key) => projectStatusTones[key] || "blue";
+const isAdminRole = (role) => ["admin", "administrador"].includes(String(role || "").toLowerCase());
 const getProgress = (value) => Math.max(0, Math.min(Number(value || 0), 100));
 const getProgressTone = (value) => {
   const progress = getProgress(value);
@@ -786,7 +787,7 @@ const loadProfile = async (userId) => {
     .eq("id", userId)
     .single();
   if (error) throw error;
-  if (!data?.ativo || data.role !== "admin") {
+  if (!data?.ativo || !isAdminRole(data.role)) {
     throw new Error("Acesso administrativo nao autorizado.");
   }
   state.profile = data;

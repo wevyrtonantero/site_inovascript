@@ -97,6 +97,7 @@ const formatDate = (value) => {
 
 const getLabel = (map, key) => map[key] || "Não definido";
 const getTone = (key) => projectStatusTones[key] || "blue";
+const isAdminRole = (role) => ["admin", "administrador"].includes(String(role || "").toLowerCase());
 const getProgress = (value) => Math.max(0, Math.min(Number(value || 0), 100));
 const getProgressTone = (value) => {
   const progress = getProgress(value);
@@ -366,7 +367,7 @@ const loadProfile = async (userId) => {
 
   if (error) throw error;
   if (!data?.ativo) throw new Error("Seu acesso está inativo. Fale com a InovaScript.");
-  if (data.role === "admin") {
+  if (isAdminRole(data.role)) {
     window.location.replace("./admin.html");
     return null;
   }
