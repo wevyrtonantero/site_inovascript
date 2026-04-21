@@ -95,6 +95,7 @@ const formatDate = (value) => {
 
 const getLabel = (map, key) => map[key] || "Não definido";
 const getTone = (key) => projectStatusTones[key] || "blue";
+const getProgress = (value) => Math.max(0, Math.min(Number(value || 0), 100));
 const selectedService = () => state.services.find((service) => service.id === state.selectedServiceId) || null;
 const selectedDetails = () => state.details.get(state.selectedServiceId) || { feedbacks: [], steps: [], updates: [] };
 
@@ -170,10 +171,18 @@ const renderServiceList = () => {
   elements.serviceList.innerHTML = state.services
     .map((service) => {
       const active = service.id === state.selectedServiceId;
+      const progress = getProgress(service.percentual);
       return `
-        <button class="service-card${active ? " is-active" : ""}" type="button" data-service-id="${service.id}">
-          <strong>${escapeHtml(service.nome)}</strong>
-          <span>${escapeHtml(getLabel(projectStatusLabels, service.status))} - ${escapeHtml(service.percentual ?? 0)}%</span>
+        <button class="service-card${active ? " is-active" : ""}" type="button" data-service-id="${service.id}" style="--service-progress: ${progress}%">
+          <span class="service-card-fill" aria-hidden="true"></span>
+          <span class="service-card-content">
+            <strong>${escapeHtml(service.nome)}</strong>
+            <span class="service-card-meta">${escapeHtml(getLabel(projectStatusLabels, service.status))}</span>
+            <span class="service-card-progress">
+              <span class="service-card-bar" aria-hidden="true"><span style="width: ${progress}%"></span></span>
+              <em>${progress}%</em>
+            </span>
+          </span>
         </button>
       `;
     })
@@ -202,7 +211,7 @@ const renderSummary = () => {
     return;
   }
 
-  const progress = Math.max(0, Math.min(Number(service.percentual || 0), 100));
+  const progress = getProgress(service.percentual);
   elements.serviceSummary.innerHTML = `
     <div class="service-summary-hero">
       <div>

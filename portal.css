@@ -9,12 +9,23 @@
 }
 
 .client-side-info {
+  position: relative;
   display: grid;
-  gap: 0.25rem;
-  padding: 0.95rem;
-  border-radius: 16px;
-  background: #ffffff;
-  border: 1px solid var(--admin-border);
+  gap: 0.35rem;
+  padding: 1rem 1rem 1rem 1.1rem;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #ffffff, #f4f9ff);
+  border: 1px solid rgba(17, 111, 214, 0.16);
+  box-shadow: 0 14px 34px rgba(17, 34, 51, 0.06);
+}
+
+.client-side-info::before {
+  content: "";
+  position: absolute;
+  inset: 1rem auto 1rem 0;
+  width: 4px;
+  border-radius: 999px;
+  background: var(--admin-blue);
 }
 
 .client-side-info span {
@@ -30,7 +41,30 @@
   display: block;
 }
 
+.client-side-info strong {
+  line-height: 1.2;
+  color: var(--admin-text);
+}
+
 .client-side-info small {
+  color: var(--admin-muted);
+}
+
+.service-side-title {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0 0.35rem;
+}
+
+.service-side-title span {
+  color: var(--admin-blue-dark);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.service-side-title small {
   color: var(--admin-muted);
 }
 
@@ -40,6 +74,10 @@
   margin-top: 0;
   overflow: auto;
   padding-right: 0.2rem;
+}
+
+.client-page .service-card {
+  min-height: 6.6rem;
 }
 
 .client-page .service-card.is-active {

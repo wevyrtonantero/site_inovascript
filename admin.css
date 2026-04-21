@@ -424,6 +424,9 @@
 }
 
 .service-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   min-height: 5.4rem;
   padding: 0.95rem;
   border: 1px solid var(--admin-border);
@@ -435,15 +438,59 @@
   box-shadow: 0 10px 26px rgba(17, 34, 51, 0.06);
 }
 
+.service-card-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  z-index: 0;
+  width: var(--service-progress, 0%);
+  background: linear-gradient(90deg, rgba(17, 111, 214, 0.2), rgba(17, 111, 214, 0.08));
+  border-radius: inherit;
+  transition: width 220ms ease;
+}
+
+.service-card-content {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 0.55rem;
+}
+
 .service-card strong,
-.service-card span {
+.service-card span,
+.service-card em {
   display: block;
 }
 
-.service-card span {
-  margin-top: 0.4rem;
+.service-card-meta {
   color: var(--admin-muted);
   font-weight: 700;
+}
+
+.service-card-progress {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.1rem;
+}
+
+.service-card-progress em {
+  color: var(--admin-blue-dark);
+  font-style: normal;
+  font-weight: 900;
+}
+
+.service-card-bar {
+  height: 0.55rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(17, 111, 214, 0.12);
+}
+
+.service-card-bar span {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--admin-blue-dark), var(--admin-blue));
 }
 
 .service-card.is-active,
@@ -456,10 +503,31 @@
   box-shadow: 0 18px 42px rgba(17, 111, 214, 0.3);
 }
 
-.service-card.is-active span,
-.service-card:hover span,
-.service-card:focus-visible span {
+.service-card.is-active .service-card-fill,
+.service-card:hover .service-card-fill,
+.service-card:focus-visible .service-card-fill {
+  background: linear-gradient(90deg, rgba(85, 163, 255, 0.55), rgba(85, 163, 255, 0.18));
+}
+
+.service-card.is-active .service-card-meta,
+.service-card:hover .service-card-meta,
+.service-card:focus-visible .service-card-meta,
+.service-card.is-active .service-card-progress em,
+.service-card:hover .service-card-progress em,
+.service-card:focus-visible .service-card-progress em {
   color: rgba(255, 255, 255, 0.78);
+}
+
+.service-card.is-active .service-card-bar,
+.service-card:hover .service-card-bar,
+.service-card:focus-visible .service-card-bar {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.service-card.is-active .service-card-bar span,
+.service-card:hover .service-card-bar span,
+.service-card:focus-visible .service-card-bar span {
+  background: #ffffff;
 }
 
 .admin-tabs {
