@@ -975,7 +975,7 @@ a {
 }
 
 .trusted-section {
-  padding: 3.6rem 0;
+  padding: 2.4rem 0;
   background:
     radial-gradient(circle at 10% 20%, rgba(70, 162, 255, 0.14), transparent 24rem),
     #ffffff;
@@ -985,14 +985,14 @@ a {
 
 .trusted-inner {
   display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(280px, 1fr);
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  gap: clamp(1.4rem, 4vw, 3.5rem);
+  gap: clamp(1rem, 4vw, 2.4rem);
 }
 
 .trusted-inner h2 {
   margin: 0.45rem 0 0;
-  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  font-size: clamp(1.45rem, 2.2vw, 2rem);
   line-height: 1.08;
 }
 
@@ -1002,17 +1002,17 @@ a {
 }
 
 .trusted-logo-card {
-  width: min(430px, 100%);
-  padding: 1.2rem;
-  border-radius: 24px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(239, 246, 252, 0.94));
+  width: min(220px, 100%);
+  padding: 0.7rem;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.74);
   border: 1px solid rgba(12, 93, 191, 0.12);
-  box-shadow: 0 24px 70px rgba(17, 22, 29, 0.1);
+  box-shadow: 0 14px 34px rgba(17, 22, 29, 0.07);
 }
 
 .trusted-logo-card img {
   width: 100%;
-  border-radius: 18px;
+  border-radius: 10px;
 }
 
 .industry-band {

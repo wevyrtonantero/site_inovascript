@@ -118,9 +118,9 @@ const translations = {
     },
     portal: {
       eyebrow: "Portal de acompanhamento",
-      title: "Seu cliente acompanha o projeto com login, cronograma e histórico claro.",
+      title: "Quem contrata a InovaScript acompanha o projeto em tempo real.",
       copy:
-        "Além de desenvolver sistemas, sites e automações, a InovaScript pode entregar um portal privado para acompanhamento da implantação. Cada cliente acessa seus serviços, vê percentual de andamento, links de preview, atualizações publicadas e conversa organizada por projeto.",
+        "O portal é um benefício dos nossos clientes: um espaço privado para acompanhar a aplicação ganhando corpo, ver o percentual de evolução, acessar previews, acompanhar decisões e deixar feedbacks com transparência durante toda a criação.",
       button: "Entrar no portal do cliente",
       card1Title: "Cronograma visível",
       card1Copy: "Etapas, status, previsão e justificativas sem troca perdida de mensagem.",
@@ -324,9 +324,9 @@ const translations = {
     },
     portal: {
       eyebrow: "Client tracking portal",
-      title: "Your client tracks the project with login, timeline and clear history.",
+      title: "InovaScript clients track their project in real time.",
       copy:
-        "Beyond building systems, websites and automations, InovaScript can deliver a private portal to track implementation. Each client accesses their services, progress percentage, preview links, published updates and project-based conversation.",
+        "The portal is a benefit for our clients: a private space to watch the application take shape, follow progress percentage, access previews, review decisions and leave feedback with transparency throughout the build.",
       button: "Open client portal",
       card1Title: "Visible timeline",
       card1Copy: "Steps, status, forecast dates and justifications without lost message threads.",
