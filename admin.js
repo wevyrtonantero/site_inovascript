@@ -27,6 +27,7 @@ const elements = {
   clientModal: document.querySelector("[data-client-modal]"),
   clientModalMessage: document.querySelector("[data-client-modal-message]"),
   clientSearch: document.querySelector("[data-client-search]"),
+  deleteClientConfirmName: document.querySelector("[data-delete-client-confirm-name]"),
   confirmDeleteClient: document.querySelector("[data-confirm-delete-client]"),
   createdAccess: document.querySelector("[data-created-access]"),
   deleteClientInfo: document.querySelector("[data-delete-client-info]"),
@@ -216,6 +217,17 @@ const closeClientModal = () => {
   setMessage(elements.clientModalMessage, "");
 };
 
+const validateDeleteClientConfirmation = () => {
+  const client = selectedClient();
+  const typedName = String(elements.deleteClientConfirmName?.value || "").trim();
+  const expectedName = String(client?.nome_empresa || "").trim();
+  const canDelete = Boolean(client && typedName && typedName === expectedName);
+  if (elements.confirmDeleteClient) {
+    elements.confirmDeleteClient.disabled = !canDelete;
+  }
+  return canDelete;
+};
+
 const openDeleteClientModal = () => {
   const client = selectedClient();
   if (!client) {
@@ -223,16 +235,26 @@ const openDeleteClientModal = () => {
     return;
   }
 
-  elements.deleteClientInfo.textContent = `Cliente: ${client.nome_empresa} - ${client.email || "sem e-mail"}`;
+  elements.deleteClientInfo.textContent = `Voce esta removendo somente: ${client.nome_empresa} - ${client.email || "sem e-mail"}`;
+  if (elements.deleteClientConfirmName) {
+    elements.deleteClientConfirmName.value = "";
+    elements.deleteClientConfirmName.placeholder = client.nome_empresa || "Nome da empresa";
+  }
+  validateDeleteClientConfirmation();
   setMessage(elements.deleteClientMessage, "");
   elements.deleteClientModal.hidden = false;
   document.body.classList.add("modal-open");
+  window.setTimeout(() => elements.deleteClientConfirmName?.focus(), 40);
 };
 
 const closeDeleteClientModal = () => {
   elements.deleteClientModal.hidden = true;
   document.body.classList.remove("modal-open");
   setMessage(elements.deleteClientMessage, "");
+  if (elements.deleteClientConfirmName) {
+    elements.deleteClientConfirmName.value = "";
+  }
+  validateDeleteClientConfirmation();
 };
 
 const openPasswordModal = () => {
@@ -869,7 +891,7 @@ const handleRefresh = async () => {
 
 const handleRestoreClients = async () => {
   const confirmed = window.confirm(
-    "Restaurar clientes excluidos? Isso reativa clientes, acessos e servicos desativados por exclusao."
+    "Restaurar clientes apagados? Isso nao exclui nada; apenas reativa clientes, acessos e servicos que estavam desativados."
   );
   if (!confirmed) return;
 
@@ -1077,6 +1099,13 @@ const handleDeleteClient = async () => {
     return;
   }
 
+  if (!validateDeleteClientConfirmation()) {
+    setMessage(elements.deleteClientMessage, `Digite exatamente "${client.nome_empresa}" para confirmar.`, "error");
+    return;
+  }
+
+  const typedName = String(elements.deleteClientConfirmName?.value || "").trim();
+
   const {
     data: { session },
   } = await supabaseClient.auth.getSession();
@@ -1096,7 +1125,10 @@ const handleDeleteClient = async () => {
         Authorization: `Bearer ${session.access_token}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ client_id: client.id }),
+      body: JSON.stringify({
+        client_id: client.id,
+        confirm_nome_empresa: typedName,
+      }),
     });
     const responseText = await response.text();
     let result = null;
@@ -1408,6 +1440,7 @@ elements.clientSearch.addEventListener("input", () => {
   state.search = elements.clientSearch.value;
   renderClients();
 });
+elements.deleteClientConfirmName?.addEventListener("input", validateDeleteClientConfirmation);
 elements.stepSort.addEventListener("change", () => {
   state.stepSort = elements.stepSort.value;
   renderSteps();

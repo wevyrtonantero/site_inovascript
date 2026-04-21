@@ -976,6 +976,17 @@
   color: var(--admin-text);
 }
 
+.confirm-field {
+  display: grid;
+  gap: 0.45rem;
+  margin: 1rem 0;
+}
+
+.confirm-field span {
+  font-weight: 800;
+  color: var(--admin-text);
+}
+
 .reset-card {
   display: grid;
   gap: 1rem;

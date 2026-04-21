@@ -102,9 +102,15 @@ module.exports = async (request, response) => {
 
     const body = typeof request.body === "string" ? JSON.parse(request.body || "{}") : request.body || {};
     const clientId = String(body.client_id || "").trim();
+    const confirmNomeEmpresa = String(body.confirm_nome_empresa || "").trim();
 
     if (!clientId) {
       json(response, 400, { error: "Informe o cliente para excluir." });
+      return;
+    }
+
+    if (!confirmNomeEmpresa) {
+      json(response, 400, { error: "Digite o nome da empresa para confirmar a exclusao." });
       return;
     }
 
@@ -115,6 +121,11 @@ module.exports = async (request, response) => {
 
     if (!client || client.ativo === false) {
       json(response, 404, { error: "Cliente ativo nao encontrado." });
+      return;
+    }
+
+    if (confirmNomeEmpresa !== String(client.nome_empresa || "").trim()) {
+      json(response, 400, { error: "Nome da empresa nao confere com o cliente selecionado." });
       return;
     }
 

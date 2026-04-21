@@ -77,7 +77,7 @@
             </div>
             <div class="admin-topbar-actions">
               <button class="admin-button admin-button-secondary" type="button" data-restore-clients>
-                Restaurar excluidos
+                Restaurar clientes apagados
               </button>
               <button class="admin-button admin-button-ghost" type="button" data-refresh-admin>Atualizar</button>
               <button class="admin-button admin-button-danger" type="button" data-admin-logout>Sair</button>
@@ -285,13 +285,17 @@
         <div class="admin-message" data-delete-client-message hidden></div>
         <div class="danger-panel">
           <strong>O que acontece?</strong>
-          <p>O cliente sai da sua lista, o acesso dele fica inativo e os servicos deixam de aparecer no portal. O historico fica preservado no banco.</p>
+          <p>Somente o cliente selecionado sera removido da sua lista. O acesso dele fica inativo e os servicos dele deixam de aparecer no portal. O historico fica preservado no banco.</p>
         </div>
+        <label class="confirm-field">
+          <span>Para confirmar, digite exatamente o nome da empresa selecionada</span>
+          <input type="text" data-delete-client-confirm-name autocomplete="off" placeholder="Nome da empresa" />
+        </label>
         <div class="action-row">
           <button class="admin-button admin-button-ghost" type="button" data-close-delete-client-modal>
             Cancelar
           </button>
-          <button class="admin-button admin-button-danger" type="button" data-confirm-delete-client>
+          <button class="admin-button admin-button-danger" type="button" data-confirm-delete-client disabled>
             Confirmar exclusao
           </button>
         </div>
