@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portal do Cliente | InovaScript</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./admin.css" />
+    <link rel="stylesheet" href="./portal.css" />
+  </head>
+  <body class="admin-page client-page">
+    <main class="admin-app">
+      <section class="admin-loading" data-client-loading>
+        <div class="admin-loading-card">
+          <span></span>
+          <strong>Carregando portal</strong>
+          <p>Buscando seus serviços e atualizações.</p>
+        </div>
+      </section>
+
+      <section class="admin-login" data-client-login hidden>
+        <div class="admin-login-card">
+          <p class="admin-kicker">Portal do cliente</p>
+          <h1>Entre para acompanhar seus serviços.</h1>
+          <div class="admin-message" data-client-login-message hidden></div>
+          <form data-client-login-form>
+            <label>
+              <span>E-mail</span>
+              <input type="email" name="email" autocomplete="email" required />
+            </label>
+            <label>
+              <span>Senha</span>
+              <input type="password" name="password" autocomplete="current-password" required />
+            </label>
+            <button class="admin-button admin-button-primary" type="submit">Entrar no portal</button>
+          </form>
+          <a href="./index.html">Voltar ao site</a>
+        </div>
+      </section>
+
+      <section class="admin-shell" data-client-shell hidden>
+        <aside class="admin-sidebar">
+          <a class="admin-brand" href="./index.html">
+            <img src="./assets/brand-symbol.png" alt="" />
+            <span>
+              <strong>InovaScript</strong>
+              <small>Portal do cliente</small>
+            </span>
+          </a>
+
+          <nav class="admin-menu" aria-label="Menu do cliente">
+            <button type="button" class="is-active" data-tab-button="resumo">Resumo</button>
+            <button type="button" data-tab-button="cronograma">Cronograma</button>
+            <button type="button" data-tab-button="atualizacoes">Atualizações</button>
+            <button type="button" data-tab-button="conversa">Conversa</button>
+          </nav>
+
+          <div class="client-side-info">
+            <span>Cliente</span>
+            <strong data-client-company>Carregando...</strong>
+            <small data-client-person></small>
+          </div>
+
+          <div class="service-list" data-service-list></div>
+        </aside>
+
+        <section class="admin-main">
+          <header class="admin-topbar">
+            <div>
+              <p class="admin-kicker">Acompanhamento</p>
+              <h1 data-page-title>Seus serviços</h1>
+              <p data-page-subtitle>Escolha um serviço na lateral para ver andamento, links e conversa.</p>
+            </div>
+            <div class="admin-topbar-actions">
+              <button class="admin-button admin-button-ghost" type="button" data-client-refresh>Atualizar</button>
+              <button class="admin-button admin-button-danger" type="button" data-client-logout>Sair</button>
+            </div>
+          </header>
+
+          <div class="admin-message" data-client-message hidden></div>
+
+          <section class="admin-cards" data-client-cards></section>
+
+          <section class="workspace">
+            <article class="workspace-head">
+              <div>
+                <p class="admin-kicker">Serviço selecionado</p>
+                <h2 data-selected-service-name>Nenhum serviço selecionado</h2>
+                <p data-selected-service-meta>Selecione um serviço na lateral.</p>
+              </div>
+            </article>
+
+            <section class="tab-panel is-active" data-tab-panel="resumo">
+              <div class="summary-layout">
+                <article class="admin-card large" data-service-summary></article>
+                <article class="admin-card">
+                  <h3>Como acompanhar</h3>
+                  <ul class="feed-list">
+                    <li><strong>Resumo:</strong> status, percentual, previsão e links liberados.</li>
+                    <li><strong>Cronograma:</strong> etapas do serviço e andamento.</li>
+                    <li><strong>Atualizações:</strong> novidades publicadas pela InovaScript.</li>
+                    <li><strong>Conversa:</strong> envie dúvidas, aprovações ou ajustes.</li>
+                  </ul>
+                </article>
+              </div>
+            </section>
+
+            <section class="tab-panel" data-tab-panel="cronograma">
+              <article class="admin-card">
+                <h3>Cronograma</h3>
+                <div class="admin-list" data-step-list></div>
+              </article>
+            </section>
+
+            <section class="tab-panel" data-tab-panel="atualizacoes">
+              <article class="admin-card">
+                <h3>Atualizações</h3>
+                <div class="admin-list" data-update-list></div>
+              </article>
+            </section>
+
+            <section class="tab-panel" data-tab-panel="conversa">
+              <div class="split-panel">
+                <article class="admin-card">
+                  <h3>Enviar mensagem</h3>
+                  <form class="admin-form" data-feedback-form>
+                    <label>
+                      <span>Mensagem</span>
+                      <textarea name="mensagem" rows="4" placeholder="Escreva sua dúvida, aprovação ou ajuste." required></textarea>
+                    </label>
+                    <button class="admin-button admin-button-primary" type="submit">Enviar mensagem</button>
+                  </form>
+                </article>
+                <article class="admin-card">
+                  <h3>Histórico da conversa</h3>
+                  <div class="admin-list" data-feedback-list></div>
+                </article>
+              </div>
+            </section>
+          </section>
+        </section>
+      </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./portal.js"></script>
+  </body>
+</html>

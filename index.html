@@ -52,6 +52,10 @@
               Tema escuro
             </button>
 
+            <button class="portal-nav-button" type="button" data-open-client-login>
+              Área do cliente
+            </button>
+
             <a
               class="nav-cta"
               href="https://wa.me/5511994529009?text=Ol%C3%A1%2C%20quero%20conhecer%20as%20solu%C3%A7%C3%B5es%20da%20InovaScript."
@@ -109,6 +113,9 @@
               <a class="button button-secondary" href="#solucoes" data-i18n="hero.ctaSecondary">
                 Ver soluções
               </a>
+              <button class="button button-portal" type="button" data-open-client-login>
+                Acompanhar meu projeto
+              </button>
             </div>
 
             <div class="hero-proof reveal">
@@ -279,6 +286,42 @@
                 Presença digital séria, clara e alinhada à autoridade técnica da
                 empresa para vender melhor.
               </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section client-portal-section" id="portal-cliente">
+        <div class="container client-portal-grid">
+          <div class="client-portal-copy reveal">
+            <p class="eyebrow">Portal de acompanhamento</p>
+            <h2>Seu cliente acompanha o projeto com login, cronograma e histórico claro.</h2>
+            <p>
+              Além de desenvolver sistemas, sites e automações, a InovaScript pode
+              entregar um portal privado para acompanhamento da implantação. Cada
+              cliente acessa seus serviços, vê percentual de andamento, links de
+              preview, atualizações publicadas e conversa organizada por projeto.
+            </p>
+            <button class="button button-portal" type="button" data-open-client-login>
+              Entrar no portal do cliente
+            </button>
+          </div>
+
+          <div class="client-portal-panel reveal">
+            <article>
+              <span>01</span>
+              <strong>Cronograma visível</strong>
+              <p>Etapas, status, previsão e justificativas sem troca perdida de mensagem.</p>
+            </article>
+            <article>
+              <span>02</span>
+              <strong>Links do projeto</strong>
+              <p>Preview, ambiente publicado, anexos e atualizações em um só lugar.</p>
+            </article>
+            <article>
+              <span>03</span>
+              <strong>Conversa por serviço</strong>
+              <p>Feedbacks ficam vinculados ao serviço certo, com resposta e status.</p>
             </article>
           </div>
         </div>
@@ -502,6 +545,85 @@
       </div>
     </footer>
 
+    <div class="login-modal" data-login-modal hidden>
+      <div class="login-modal-backdrop" data-close-client-login></div>
+      <div
+        class="login-modal-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="client-login-title"
+      >
+        <button
+          class="login-modal-close"
+          type="button"
+          aria-label="Fechar login do cliente"
+          data-close-client-login
+        >
+          ×
+        </button>
+
+        <div class="login-modal-grid">
+          <section class="login-modal-side">
+            <p class="login-modal-kicker">Portal do cliente</p>
+            <h2 id="client-login-title">Acompanhe seu projeto com login privado.</h2>
+            <p>
+              Entre com seu e-mail e senha para visualizar cronograma, percentual,
+              links de preview, atualizações e feedbacks da sua empresa.
+            </p>
+
+            <ul class="login-modal-points">
+              <li>Progresso do projeto em percentual</li>
+              <li>Etapas concluídas, em andamento e pendentes</li>
+              <li>Links de preview e produção quando liberados</li>
+              <li>Canal organizado para feedbacks e respostas</li>
+            </ul>
+          </section>
+
+          <section class="login-modal-panel">
+            <div class="login-modal-message" data-client-login-message hidden></div>
+
+            <form class="login-modal-form" data-client-login-form>
+              <label class="login-modal-field">
+                <span>E-mail</span>
+                <input
+                  type="email"
+                  name="email"
+                  autocomplete="email"
+                  placeholder="voce@empresa.com.br"
+                  required
+                />
+              </label>
+
+              <label class="login-modal-field">
+                <span>Senha</span>
+                <input
+                  type="password"
+                  name="password"
+                  autocomplete="current-password"
+                  placeholder="Digite sua senha"
+                  required
+                />
+              </label>
+
+              <button class="button button-primary login-modal-submit" type="submit">
+                Entrar e abrir painel
+              </button>
+            </form>
+
+            <div class="login-modal-help">
+              <strong>Sem acesso ainda?</strong>
+              <p>
+                Fale com a InovaScript para liberar sua empresa no portal e vincular
+                seu projeto.
+              </p>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./site-auth.js"></script>
     <script src="./script.js"></script>
     </body>
 </html>

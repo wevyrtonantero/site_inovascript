@@ -1,0 +1,61 @@
+.client-page .admin-shell {
+  grid-template-columns: 320px minmax(0, 1fr);
+}
+
+.client-page .admin-sidebar {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(239, 246, 252, 0.94)),
+    #ffffff;
+}
+
+.client-side-info {
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.95rem;
+  border-radius: 16px;
+  background: #ffffff;
+  border: 1px solid var(--admin-border);
+}
+
+.client-side-info span {
+  color: var(--admin-muted);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.client-side-info strong,
+.client-side-info small {
+  display: block;
+}
+
+.client-side-info small {
+  color: var(--admin-muted);
+}
+
+.client-page .service-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  margin-top: 0;
+  overflow: auto;
+  padding-right: 0.2rem;
+}
+
+.client-page .service-card.is-active {
+  background: linear-gradient(135deg, #062e63, var(--admin-blue));
+}
+
+.client-page .workspace {
+  min-height: 520px;
+}
+
+.client-page .tab-panel {
+  padding: 1.15rem;
+}
+
+@media (max-width: 860px) {
+  .client-page .admin-shell {
+    grid-template-columns: 1fr;
+  }
+}

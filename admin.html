@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin | Portal InovaScript</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./admin.css" />
+  </head>
+  <body class="admin-page">
+    <main class="admin-app">
+      <section class="admin-loading" data-admin-loading>
+        <div class="admin-loading-card">
+          <span></span>
+          <strong>Carregando painel administrativo</strong>
+          <p>Validando sua sessao e buscando clientes.</p>
+        </div>
+      </section>
+
+      <section class="admin-login" data-admin-login hidden>
+        <div class="admin-login-card">
+          <p class="admin-kicker">InovaScript Admin</p>
+          <h1>Entre para gerenciar clientes e servicos.</h1>
+          <div class="admin-message" data-admin-login-message hidden></div>
+          <form data-admin-login-form>
+            <label>
+              <span>E-mail</span>
+              <input type="email" name="email" autocomplete="email" required />
+            </label>
+            <label>
+              <span>Senha</span>
+              <input type="password" name="password" autocomplete="current-password" required />
+            </label>
+            <button class="admin-button admin-button-primary" type="submit">Entrar no admin</button>
+          </form>
+          <a href="./index.html">Voltar ao site</a>
+        </div>
+      </section>
+
+      <section class="admin-shell" data-admin-shell hidden>
+        <aside class="admin-sidebar">
+          <a class="admin-brand" href="./index.html">
+            <img src="./assets/brand-symbol.png" alt="" />
+            <span>
+              <strong>InovaScript</strong>
+              <small>Admin de projetos</small>
+            </span>
+          </a>
+
+          <button class="admin-button admin-button-primary" type="button" data-open-client-modal>
+            Novo cliente + acesso
+          </button>
+
+          <nav class="admin-menu" aria-label="Menu administrativo">
+            <button type="button" class="is-active" data-tab-button="resumo">Resumo</button>
+            <button type="button" data-tab-button="servico">Servico</button>
+            <button type="button" data-tab-button="cronograma">Cronograma</button>
+            <button type="button" data-tab-button="atualizacoes">Atualizacoes</button>
+            <button type="button" data-tab-button="conversa">Conversa</button>
+          </nav>
+
+          <label class="admin-search">
+            <span>Buscar cliente</span>
+            <input type="search" placeholder="Empresa ou responsavel" data-client-search />
+          </label>
+
+          <div class="client-list" data-client-list></div>
+        </aside>
+
+        <section class="admin-main">
+          <header class="admin-topbar">
+            <div>
+              <p class="admin-kicker">Painel administrativo</p>
+              <h1 data-page-title>Clientes e servicos</h1>
+              <p data-page-subtitle>Escolha um cliente para alimentar o acompanhamento dele.</p>
+            </div>
+            <div class="admin-topbar-actions">
+              <button class="admin-button admin-button-ghost" type="button" data-refresh-admin>Atualizar</button>
+              <button class="admin-button admin-button-danger" type="button" data-admin-logout>Sair</button>
+            </div>
+          </header>
+
+          <div class="admin-message" data-admin-message hidden></div>
+
+          <section class="admin-cards" data-admin-cards></section>
+
+          <section class="workspace">
+            <article class="workspace-head">
+              <div>
+                <p class="admin-kicker">Cliente selecionado</p>
+                <h2 data-selected-client-name>Nenhum cliente selecionado</h2>
+                <p data-selected-client-meta>Cadastre ou selecione um cliente na lateral.</p>
+              </div>
+              <div class="workspace-actions">
+                <button class="admin-button admin-button-secondary" type="button" data-open-service-modal>
+                  Novo servico
+                </button>
+              </div>
+            </article>
+
+            <section class="service-picker">
+              <div class="section-head">
+                <div>
+                  <h3>Servicos deste cliente</h3>
+                  <p>Escolha exatamente qual entrega voce quer alimentar.</p>
+                </div>
+              </div>
+              <div class="service-list" data-service-list></div>
+            </section>
+
+            <section class="tab-panel is-active" data-tab-panel="resumo">
+              <div class="summary-layout">
+                <article class="admin-card large" data-service-summary></article>
+                <article class="admin-card">
+                  <h3>O que alimentar</h3>
+                  <ul class="feed-list">
+                    <li><strong>Servico:</strong> nome, status, percentual, previsao e links.</li>
+                    <li><strong>Cronograma:</strong> etapas, ordem, percentual e justificativas.</li>
+                    <li><strong>Atualizacoes:</strong> novidades que aparecem para o cliente.</li>
+                    <li><strong>Conversa:</strong> resposta aos feedbacks e decisoes.</li>
+                  </ul>
+                </article>
+              </div>
+            </section>
+
+            <section class="tab-panel" data-tab-panel="servico">
+              <article class="admin-card action-card">
+                <div>
+                  <h3>Servico/projeto selecionado</h3>
+                  <p>Use este bloco para criar um novo servico ou ajustar status, percentual, links e previsao do servico atual.</p>
+                </div>
+                <div class="action-row">
+                  <button class="admin-button admin-button-primary" type="button" data-open-service-modal>
+                    Criar novo servico
+                  </button>
+                  <button class="admin-button admin-button-secondary" type="button" data-edit-service>
+                    Editar servico atual
+                  </button>
+                  <button class="admin-button admin-button-danger" type="button" data-archive-service>
+                    Arquivar servico
+                  </button>
+                </div>
+              </article>
+            </section>
+
+            <section class="tab-panel" data-tab-panel="cronograma">
+              <div class="single-panel">
+                <article class="admin-card">
+                  <div class="section-head">
+                    <div>
+                      <h3>Etapas cadastradas</h3>
+                      <p>Crie etapas para mostrar o andamento do servico ao cliente.</p>
+                    </div>
+                    <button class="admin-button admin-button-primary" type="button" data-open-step-modal>
+                      Nova etapa
+                    </button>
+                  </div>
+                  <div class="admin-list" data-step-list></div>
+                </article>
+              </div>
+            </section>
+
+            <section class="tab-panel" data-tab-panel="atualizacoes">
+              <div class="single-panel">
+                <article class="admin-card">
+                  <div class="section-head">
+                    <div>
+                      <h3>Historico publicado</h3>
+                      <p>Use atualizacoes para avisar o cliente sobre entregas, links e novidades.</p>
+                    </div>
+                    <button class="admin-button admin-button-primary" type="button" data-open-update-modal>
+                      Nova atualizacao
+                    </button>
+                  </div>
+                  <div class="admin-list" data-update-list></div>
+                </article>
+              </div>
+            </section>
+
+            <section class="tab-panel" data-tab-panel="conversa">
+              <article class="admin-card">
+                <h3>Feedbacks e respostas</h3>
+                <div class="admin-list" data-feedback-list></div>
+              </article>
+            </section>
+          </section>
+        </section>
+      </section>
+    </main>
+
+    <div class="admin-modal" data-client-modal hidden>
+      <div class="admin-modal-backdrop" data-close-client-modal></div>
+      <section class="admin-modal-card">
+        <button class="admin-modal-close" type="button" data-close-client-modal>x</button>
+        <div>
+          <p class="admin-kicker">Novo cliente</p>
+          <h2>Criar cliente com login</h2>
+          <p>O e-mail sera usado pelo cliente para acessar o portal.</p>
+        </div>
+        <div class="admin-message" data-client-modal-message hidden></div>
+        <form class="admin-form" data-client-create-form>
+          <label>
+            <span>Empresa</span>
+            <input type="text" name="nome_empresa" required />
+          </label>
+          <div class="form-grid two">
+            <label>
+              <span>Responsavel</span>
+              <input type="text" name="responsavel" />
+            </label>
+            <label>
+              <span>Telefone</span>
+              <input type="text" name="telefone" />
+            </label>
+          </div>
+          <label>
+            <span>E-mail de login</span>
+            <input type="email" name="email" autocomplete="off" required />
+          </label>
+          <div class="password-row">
+            <label>
+              <span>Senha inicial</span>
+              <input type="text" name="password" autocomplete="off" required />
+            </label>
+            <button class="admin-button admin-button-secondary" type="button" data-generate-password>
+              Gerar senha
+            </button>
+          </div>
+          <label>
+            <span>Observacao interna</span>
+            <textarea name="observacao" rows="3"></textarea>
+          </label>
+          <button class="admin-button admin-button-primary" type="submit">Criar acesso</button>
+        </form>
+        <div class="created-access" data-created-access hidden></div>
+      </section>
+    </div>
+
+    <div class="admin-modal" data-service-modal hidden>
+      <div class="admin-modal-backdrop" data-close-service-modal></div>
+      <section class="admin-modal-card">
+        <button class="admin-modal-close" type="button" data-close-service-modal>x</button>
+        <div>
+          <p class="admin-kicker">Servico/projeto</p>
+          <h2 data-service-modal-title>Criar servico</h2>
+          <p>Cadastre uma entrega que o cliente podera acompanhar separadamente.</p>
+        </div>
+        <form class="admin-form" data-service-form>
+          <input type="hidden" name="id" />
+          <div class="form-grid two">
+            <label>
+              <span>Nome do servico</span>
+              <input type="text" name="nome" placeholder="Ex.: Portal do cliente" required />
+            </label>
+            <label>
+              <span>Status</span>
+              <select name="status">
+                <option value="briefing">Briefing</option>
+                <option value="em_andamento">Em andamento</option>
+                <option value="aguardando_cliente">Aguardando cliente</option>
+                <option value="homologacao">Homologacao</option>
+                <option value="finalizado">Finalizado</option>
+                <option value="pausado">Pausado</option>
+              </select>
+            </label>
+          </div>
+          <label>
+            <span>Descricao</span>
+            <textarea name="descricao" rows="3" placeholder="Resumo claro do que foi contratado"></textarea>
+          </label>
+          <div class="form-grid three">
+            <label>
+              <span>Percentual</span>
+              <input type="number" name="percentual" min="0" max="100" value="0" />
+            </label>
+            <label>
+              <span>Inicio</span>
+              <input type="date" name="data_inicio" />
+            </label>
+            <label>
+              <span>Previsao</span>
+              <input type="date" name="data_previsao" />
+            </label>
+          </div>
+          <div class="form-grid two">
+            <label>
+              <span>Link de preview</span>
+              <input type="url" name="url_preview" placeholder="https://..." />
+            </label>
+            <label>
+              <span>Link publicado</span>
+              <input type="url" name="url_producao" placeholder="https://..." />
+            </label>
+          </div>
+          <label>
+            <span>Observacao interna</span>
+            <textarea name="observacao" rows="2" placeholder="Algo que ajude voce a conduzir o atendimento"></textarea>
+          </label>
+          <button class="admin-button admin-button-primary" type="submit">Salvar servico</button>
+        </form>
+      </section>
+    </div>
+
+    <div class="admin-modal" data-step-modal hidden>
+      <div class="admin-modal-backdrop" data-close-step-modal></div>
+      <section class="admin-modal-card">
+        <button class="admin-modal-close" type="button" data-close-step-modal>x</button>
+        <div>
+          <p class="admin-kicker">Cronograma</p>
+          <h2 data-step-modal-title>Nova etapa</h2>
+          <p>Etapas ajudam o cliente a entender o andamento sem precisar perguntar toda hora.</p>
+        </div>
+        <form class="admin-form" data-step-form>
+          <input type="hidden" name="id" />
+          <label>
+            <span>Titulo</span>
+            <input type="text" name="titulo" placeholder="Ex.: Login e dashboard" required />
+          </label>
+          <label>
+            <span>Descricao</span>
+            <textarea name="descricao" rows="3"></textarea>
+          </label>
+          <div class="form-grid three">
+            <label>
+              <span>Status</span>
+              <select name="status">
+                <option value="pendente">Pendente</option>
+                <option value="em_andamento">Em andamento</option>
+                <option value="concluido">Concluido</option>
+                <option value="bloqueado">Bloqueado</option>
+                <option value="nao_possivel">Nao possivel</option>
+              </select>
+            </label>
+            <label>
+              <span>%</span>
+              <input type="number" name="percentual" min="0" max="100" value="0" />
+            </label>
+            <label>
+              <span>Ordem</span>
+              <input type="number" name="ordem" min="1" value="1" />
+            </label>
+          </div>
+          <label>
+            <span>Data prevista</span>
+            <input type="date" name="data_prevista" />
+          </label>
+          <label>
+            <span>Justificativa</span>
+            <textarea name="justificativa" rows="2" placeholder="Use para bloqueios ou nao possivel"></textarea>
+          </label>
+          <button class="admin-button admin-button-primary" type="submit">Salvar etapa</button>
+        </form>
+      </section>
+    </div>
+
+    <div class="admin-modal" data-update-modal hidden>
+      <div class="admin-modal-backdrop" data-close-update-modal></div>
+      <section class="admin-modal-card">
+        <button class="admin-modal-close" type="button" data-close-update-modal>x</button>
+        <div>
+          <p class="admin-kicker">Atualizacao</p>
+          <h2 data-update-modal-title>Publicar atualizacao</h2>
+          <p>Atualizacoes aparecem no portal do cliente e servem como diario de obra.</p>
+        </div>
+        <form class="admin-form" data-update-form>
+          <input type="hidden" name="id" />
+          <label>
+            <span>Titulo</span>
+            <input type="text" name="titulo" placeholder="Ex.: Nova versao publicada" required />
+          </label>
+          <label>
+            <span>Descricao</span>
+            <textarea name="descricao" rows="3"></textarea>
+          </label>
+          <label>
+            <span>Link ou anexo</span>
+            <input type="url" name="url_anexo" placeholder="https://..." />
+          </label>
+          <label class="check-line">
+            <input type="checkbox" name="visivel_cliente" checked />
+            <span>Visivel para o cliente</span>
+          </label>
+          <button class="admin-button admin-button-primary" type="submit">Salvar atualizacao</button>
+        </form>
+      </section>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./admin.js"></script>
+  </body>
+</html>
