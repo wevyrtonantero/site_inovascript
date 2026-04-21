@@ -15,6 +15,7 @@ const state = {
   profile: null,
   selectedServiceId: null,
   services: [],
+  stepSort: "ordem",
 };
 
 const elements = {
@@ -39,6 +40,7 @@ const elements = {
   serviceSummary: document.querySelector("[data-service-summary]"),
   shell: document.querySelector("[data-client-shell]"),
   stepList: document.querySelector("[data-step-list]"),
+  stepSort: document.querySelector("[data-step-sort]"),
   updateList: document.querySelector("[data-update-list]"),
 };
 
@@ -96,6 +98,20 @@ const formatDate = (value) => {
 const getLabel = (map, key) => map[key] || "Não definido";
 const getTone = (key) => projectStatusTones[key] || "blue";
 const getProgress = (value) => Math.max(0, Math.min(Number(value || 0), 100));
+const getProgressTone = (value) => {
+  const progress = getProgress(value);
+  if (progress >= 90) return "green";
+  if (progress >= 50) return "blue";
+  if (progress >= 25) return "amber";
+  return "red";
+};
+const sortSteps = (steps) =>
+  [...steps].sort((a, b) => {
+    if (state.stepSort === "percentual") {
+      return getProgress(b.percentual) - getProgress(a.percentual) || Number(a.ordem || 0) - Number(b.ordem || 0);
+    }
+    return Number(a.ordem || 0) - Number(b.ordem || 0) || getProgress(b.percentual) - getProgress(a.percentual);
+  });
 const selectedService = () => state.services.find((service) => service.id === state.selectedServiceId) || null;
 const selectedDetails = () => state.details.get(state.selectedServiceId) || { feedbacks: [], steps: [], updates: [] };
 
@@ -242,7 +258,7 @@ const renderSummary = () => {
 };
 
 const renderSteps = () => {
-  const steps = selectedDetails().steps || [];
+  const steps = sortSteps(selectedDetails().steps || []);
   if (!state.selectedServiceId) {
     elements.stepList.innerHTML = `<div class="empty-block">Selecione um serviço para ver o cronograma.</div>`;
     return;
@@ -253,16 +269,24 @@ const renderSteps = () => {
   }
   elements.stepList.innerHTML = steps
     .map(
-      (step) => `
-        <article class="list-item">
-          <div>
+      (step) => {
+        const progress = getProgress(step.percentual);
+        return `
+        <article class="list-item step-item" data-tone="${getProgressTone(progress)}" style="--step-progress: ${progress}%">
+          <span class="step-progress-bg" aria-hidden="true"></span>
+          <div class="step-content">
             <strong>${escapeHtml(step.titulo)}</strong>
-            <span>${escapeHtml(getLabel(stepStatusLabels, step.status))} - ${escapeHtml(step.percentual ?? 0)}%</span>
+            <span>${escapeHtml(getLabel(stepStatusLabels, step.status))}</span>
+            <div class="step-progress-line">
+              <span aria-hidden="true"><span style="width: ${progress}%"></span></span>
+              <em>${progress}%</em>
+            </div>
             <small>Previsto: ${escapeHtml(formatDate(step.data_prevista))}</small>
             ${step.justificativa ? `<small>Justificativa: ${escapeHtml(step.justificativa)}</small>` : ""}
           </div>
         </article>
-      `
+      `;
+      }
     )
     .join("");
 };
@@ -355,6 +379,7 @@ const loadClients = async () => {
     .from("clients")
     .select("id, profile_id, nome_empresa, responsavel, telefone, email, observacao, ativo, created_at")
     .eq("profile_id", state.profile.id)
+    .eq("ativo", true)
     .order("nome_empresa", { ascending: true });
 
   if (error) throw error;
@@ -574,6 +599,10 @@ elements.forgotPassword.addEventListener("click", handleForgotPassword);
 elements.refresh.addEventListener("click", handleRefresh);
 elements.logout.addEventListener("click", handleLogout);
 elements.feedbackForm.addEventListener("submit", handleFeedbackSubmit);
+elements.stepSort.addEventListener("change", () => {
+  state.stepSort = elements.stepSort.value;
+  renderSteps();
+});
 tabButtons.forEach((button) => button.addEventListener("click", () => activateTab(button.dataset.tabButton)));
 
 bootstrap();

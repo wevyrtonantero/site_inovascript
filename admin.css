@@ -588,6 +588,39 @@
   gap: 1rem;
 }
 
+.section-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: flex-end;
+  gap: 0.65rem;
+}
+
+.inline-filter {
+  display: grid;
+  gap: 0.35rem;
+  min-width: 190px;
+}
+
+.inline-filter span {
+  color: var(--admin-muted);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.inline-filter select {
+  min-height: 2.8rem;
+  border: 1px solid var(--admin-border);
+  border-radius: 14px;
+  background: #ffffff;
+  color: var(--admin-text);
+  padding: 0.65rem 0.85rem;
+  font: inherit;
+  font-weight: 800;
+}
+
 .action-row {
   display: flex;
   flex-wrap: wrap;
@@ -725,6 +758,8 @@
 }
 
 .list-item {
+  position: relative;
+  overflow: hidden;
   display: flex;
   justify-content: space-between;
   gap: 1rem;
@@ -732,6 +767,92 @@
   border: 1px solid var(--admin-border);
   border-radius: 16px;
   background: var(--admin-panel-soft);
+}
+
+.step-item {
+  isolation: isolate;
+}
+
+.step-progress-bg {
+  position: absolute;
+  inset: 0 auto 0 0;
+  z-index: 0;
+  width: var(--step-progress, 0%);
+  background: rgba(17, 111, 214, 0.08);
+  transition: width 220ms ease;
+}
+
+.step-item[data-tone="red"] .step-progress-bg {
+  background: rgba(185, 58, 58, 0.1);
+}
+
+.step-item[data-tone="amber"] .step-progress-bg {
+  background: rgba(185, 107, 22, 0.12);
+}
+
+.step-item[data-tone="green"] .step-progress-bg {
+  background: rgba(21, 128, 94, 0.12);
+}
+
+.step-content {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.step-progress-line {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.65rem;
+  width: min(360px, 100%);
+}
+
+.step-progress-line > span {
+  height: 0.55rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(17, 111, 214, 0.13);
+}
+
+.step-progress-line > span > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--admin-blue);
+}
+
+.step-item[data-tone="red"] .step-progress-line > span > span {
+  background: var(--admin-red);
+}
+
+.step-item[data-tone="amber"] .step-progress-line > span > span {
+  background: var(--admin-amber);
+}
+
+.step-item[data-tone="green"] .step-progress-line > span > span {
+  background: var(--admin-green);
+}
+
+.step-progress-line em {
+  color: var(--admin-blue-dark);
+  font-style: normal;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+}
+
+.step-item[data-tone="red"] .step-progress-line em {
+  color: var(--admin-red);
+}
+
+.step-item[data-tone="amber"] .step-progress-line em {
+  color: var(--admin-amber);
+}
+
+.step-item[data-tone="green"] .step-progress-line em {
+  color: var(--admin-green);
 }
 
 .list-item strong,
@@ -747,6 +868,8 @@
 }
 
 .list-actions {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
@@ -837,6 +960,22 @@
   word-break: break-word;
 }
 
+.danger-panel {
+  display: grid;
+  gap: 0.35rem;
+  margin: 1rem 0;
+  padding: 1rem;
+  border-radius: 16px;
+  background: rgba(185, 58, 58, 0.08);
+  border: 1px solid rgba(185, 58, 58, 0.16);
+  color: var(--admin-red);
+}
+
+.danger-panel p {
+  margin: 0;
+  color: var(--admin-text);
+}
+
 .reset-card {
   display: grid;
   gap: 1rem;
@@ -897,7 +1036,12 @@ body.modal-open {
   .admin-topbar-actions,
   .workspace-actions,
   .action-row,
+  .section-actions,
   .admin-button {
+    width: 100%;
+  }
+
+  .inline-filter {
     width: 100%;
   }
 

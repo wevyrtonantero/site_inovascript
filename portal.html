@@ -99,23 +99,24 @@
             </article>
 
             <section class="tab-panel is-active" data-tab-panel="resumo">
-              <div class="summary-layout">
-                <article class="admin-card large" data-service-summary></article>
-                <article class="admin-card">
-                  <h3>Como acompanhar</h3>
-                  <ul class="feed-list">
-                    <li><strong>Resumo:</strong> status, percentual, previsão e links liberados.</li>
-                    <li><strong>Cronograma:</strong> etapas do serviço e andamento.</li>
-                    <li><strong>Atualizações:</strong> novidades publicadas pela InovaScript.</li>
-                    <li><strong>Conversa:</strong> envie dúvidas, aprovações ou ajustes.</li>
-                  </ul>
-                </article>
-              </div>
+              <article class="admin-card large" data-service-summary></article>
             </section>
 
             <section class="tab-panel" data-tab-panel="cronograma">
               <article class="admin-card">
-                <h3>Cronograma</h3>
+                <div class="section-head">
+                  <div>
+                    <h3>Cronograma</h3>
+                    <p>Veja o andamento de cada etapa do servico.</p>
+                  </div>
+                  <label class="inline-filter">
+                    <span>Ordenar</span>
+                    <select data-step-sort>
+                      <option value="ordem">Ordem de execucao</option>
+                      <option value="percentual">Por porcentagem</option>
+                    </select>
+                  </label>
+                </div>
                 <div class="admin-list" data-step-list></div>
               </article>
             </section>

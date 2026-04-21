@@ -96,6 +96,9 @@
                 <button class="admin-button admin-button-secondary" type="button" data-open-password-modal>
                   Redefinir senha
                 </button>
+                <button class="admin-button admin-button-danger" type="button" data-open-delete-client-modal>
+                  Excluir cliente
+                </button>
                 <button class="admin-button admin-button-secondary" type="button" data-open-service-modal>
                   Novo servico
                 </button>
@@ -113,18 +116,7 @@
             </section>
 
             <section class="tab-panel is-active" data-tab-panel="resumo">
-              <div class="summary-layout">
-                <article class="admin-card large" data-service-summary></article>
-                <article class="admin-card">
-                  <h3>O que alimentar</h3>
-                  <ul class="feed-list">
-                    <li><strong>Servico:</strong> nome, status, percentual, previsao e links.</li>
-                    <li><strong>Cronograma:</strong> etapas, ordem, percentual e justificativas.</li>
-                    <li><strong>Atualizacoes:</strong> novidades que aparecem para o cliente.</li>
-                    <li><strong>Conversa:</strong> resposta aos feedbacks e decisoes.</li>
-                  </ul>
-                </article>
-              </div>
+              <article class="admin-card large" data-service-summary></article>
             </section>
 
             <section class="tab-panel" data-tab-panel="servico">
@@ -155,9 +147,18 @@
                       <h3>Etapas cadastradas</h3>
                       <p>Crie etapas para mostrar o andamento do servico ao cliente.</p>
                     </div>
-                    <button class="admin-button admin-button-primary" type="button" data-open-step-modal>
-                      Nova etapa
-                    </button>
+                    <div class="section-actions">
+                      <label class="inline-filter">
+                        <span>Ordenar</span>
+                        <select data-step-sort>
+                          <option value="ordem">Ordem de execucao</option>
+                          <option value="percentual">Por porcentagem</option>
+                        </select>
+                      </label>
+                      <button class="admin-button admin-button-primary" type="button" data-open-step-modal>
+                        Nova etapa
+                      </button>
+                    </div>
                   </div>
                   <div class="admin-list" data-step-list></div>
                 </article>
@@ -269,6 +270,31 @@
       </section>
     </div>
 
+    <div class="admin-modal" data-delete-client-modal hidden>
+      <div class="admin-modal-backdrop" data-close-delete-client-modal></div>
+      <section class="admin-modal-card">
+        <button class="admin-modal-close" type="button" data-close-delete-client-modal>x</button>
+        <div>
+          <p class="admin-kicker">Excluir cliente</p>
+          <h2>Remover cliente do portal</h2>
+          <p data-delete-client-info>Selecione um cliente para excluir.</p>
+        </div>
+        <div class="admin-message" data-delete-client-message hidden></div>
+        <div class="danger-panel">
+          <strong>O que acontece?</strong>
+          <p>O cliente sai da sua lista, o acesso dele fica inativo e os servicos deixam de aparecer no portal. O historico fica preservado no banco.</p>
+        </div>
+        <div class="action-row">
+          <button class="admin-button admin-button-ghost" type="button" data-close-delete-client-modal>
+            Cancelar
+          </button>
+          <button class="admin-button admin-button-danger" type="button" data-confirm-delete-client>
+            Confirmar exclusao
+          </button>
+        </div>
+      </section>
+    </div>
+
     <div class="admin-modal" data-service-modal hidden>
       <div class="admin-modal-backdrop" data-close-service-modal></div>
       <section class="admin-modal-card">
@@ -369,7 +395,7 @@
               <input type="number" name="percentual" min="0" max="100" value="0" />
             </label>
             <label>
-              <span>Ordem</span>
+              <span>Ordem de execucao</span>
               <input type="number" name="ordem" min="1" value="1" />
             </label>
           </div>

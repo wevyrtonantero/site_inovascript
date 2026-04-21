@@ -17,6 +17,7 @@ const state = {
   selectedClientId: null,
   selectedServiceId: null,
   services: [],
+  stepSort: "ordem",
 };
 
 const elements = {
@@ -26,7 +27,11 @@ const elements = {
   clientModal: document.querySelector("[data-client-modal]"),
   clientModalMessage: document.querySelector("[data-client-modal-message]"),
   clientSearch: document.querySelector("[data-client-search]"),
+  confirmDeleteClient: document.querySelector("[data-confirm-delete-client]"),
   createdAccess: document.querySelector("[data-created-access]"),
+  deleteClientInfo: document.querySelector("[data-delete-client-info]"),
+  deleteClientMessage: document.querySelector("[data-delete-client-message]"),
+  deleteClientModal: document.querySelector("[data-delete-client-modal]"),
   feedbackList: document.querySelector("[data-feedback-list]"),
   generatePassword: document.querySelector("[data-generate-password]"),
   generateResetPassword: document.querySelector("[data-generate-reset-password]"),
@@ -39,6 +44,7 @@ const elements = {
   archiveService: document.querySelector("[data-archive-service]"),
   editService: document.querySelector("[data-edit-service]"),
   openClientModal: document.querySelector("[data-open-client-modal]"),
+  openDeleteClientModal: document.querySelector("[data-open-delete-client-modal]"),
   openPasswordModal: document.querySelector("[data-open-password-modal]"),
   pageSubtitle: document.querySelector("[data-page-subtitle]"),
   pageTitle: document.querySelector("[data-page-title]"),
@@ -60,6 +66,7 @@ const elements = {
   stepList: document.querySelector("[data-step-list]"),
   stepModal: document.querySelector("[data-step-modal]"),
   stepModalTitle: document.querySelector("[data-step-modal-title]"),
+  stepSort: document.querySelector("[data-step-sort]"),
   updateForm: document.querySelector("[data-update-form]"),
   updateList: document.querySelector("[data-update-list]"),
   updateModal: document.querySelector("[data-update-modal]"),
@@ -67,6 +74,7 @@ const elements = {
 };
 
 const closeClientModalButtons = document.querySelectorAll("[data-close-client-modal]");
+const closeDeleteClientModalButtons = document.querySelectorAll("[data-close-delete-client-modal]");
 const closePasswordModalButtons = document.querySelectorAll("[data-close-password-modal]");
 const closeServiceModalButtons = document.querySelectorAll("[data-close-service-modal]");
 const closeStepModalButtons = document.querySelectorAll("[data-close-step-modal]");
@@ -129,6 +137,20 @@ const toInputDate = (value) => (value ? String(value).slice(0, 10) : "");
 const getLabel = (map, key) => map[key] || "Nao definido";
 const getTone = (key) => projectStatusTones[key] || "blue";
 const getProgress = (value) => Math.max(0, Math.min(Number(value || 0), 100));
+const getProgressTone = (value) => {
+  const progress = getProgress(value);
+  if (progress >= 90) return "green";
+  if (progress >= 50) return "blue";
+  if (progress >= 25) return "amber";
+  return "red";
+};
+const sortSteps = (steps) =>
+  [...steps].sort((a, b) => {
+    if (state.stepSort === "percentual") {
+      return getProgress(b.percentual) - getProgress(a.percentual) || Number(a.ordem || 0) - Number(b.ordem || 0);
+    }
+    return Number(a.ordem || 0) - Number(b.ordem || 0) || getProgress(b.percentual) - getProgress(a.percentual);
+  });
 const selectedClient = () => state.clients.find((client) => client.id === state.selectedClientId) || null;
 const selectedService = () => state.services.find((service) => service.id === state.selectedServiceId) || null;
 const selectedDetails = () => state.details.get(state.selectedServiceId) || { feedbacks: [], steps: [], updates: [] };
@@ -190,6 +212,25 @@ const closeClientModal = () => {
   elements.clientModal.hidden = true;
   document.body.classList.remove("modal-open");
   setMessage(elements.clientModalMessage, "");
+};
+
+const openDeleteClientModal = () => {
+  const client = selectedClient();
+  if (!client) {
+    setMessage(elements.mainMessage, "Selecione um cliente antes de excluir.", "error");
+    return;
+  }
+
+  elements.deleteClientInfo.textContent = `Cliente: ${client.nome_empresa} - ${client.email || "sem e-mail"}`;
+  setMessage(elements.deleteClientMessage, "");
+  elements.deleteClientModal.hidden = false;
+  document.body.classList.add("modal-open");
+};
+
+const closeDeleteClientModal = () => {
+  elements.deleteClientModal.hidden = true;
+  document.body.classList.remove("modal-open");
+  setMessage(elements.deleteClientMessage, "");
 };
 
 const openPasswordModal = () => {
@@ -524,7 +565,7 @@ const renderServiceSummary = () => {
 };
 
 const renderSteps = () => {
-  const steps = selectedDetails().steps || [];
+  const steps = sortSteps(selectedDetails().steps || []);
   if (!state.selectedServiceId) {
     elements.stepList.innerHTML = `<div class="empty-block">Selecione um servico antes de criar etapas.</div>`;
     return;
@@ -535,19 +576,27 @@ const renderSteps = () => {
   }
   elements.stepList.innerHTML = steps
     .map(
-      (step) => `
-        <article class="list-item">
-          <div>
+      (step) => {
+        const progress = getProgress(step.percentual);
+        return `
+        <article class="list-item step-item" data-tone="${getProgressTone(progress)}" style="--step-progress: ${progress}%">
+          <span class="step-progress-bg" aria-hidden="true"></span>
+          <div class="step-content">
             <strong>${escapeHtml(step.titulo)}</strong>
-            <span>${escapeHtml(getLabel(stepStatusLabels, step.status))} - ${escapeHtml(step.percentual ?? 0)}%</span>
-            <small>Ordem ${escapeHtml(step.ordem ?? "-")} - previsto: ${escapeHtml(formatDate(step.data_prevista))}</small>
+            <span>${escapeHtml(getLabel(stepStatusLabels, step.status))}</span>
+            <div class="step-progress-line">
+              <span aria-hidden="true"><span style="width: ${progress}%"></span></span>
+              <em>${progress}%</em>
+            </div>
+            <small>Etapa ${escapeHtml(step.ordem ?? "-")} - previsto: ${escapeHtml(formatDate(step.data_prevista))}</small>
           </div>
           <div class="list-actions">
             <button class="admin-button admin-button-secondary" type="button" data-edit-step="${step.id}">Editar</button>
             <button class="admin-button admin-button-danger" type="button" data-delete-step="${step.id}">Excluir</button>
           </div>
         </article>
-      `
+      `;
+      }
     )
     .join("");
   elements.stepList.querySelectorAll("[data-edit-step]").forEach((button) => {
@@ -659,6 +708,7 @@ const loadClients = async () => {
   const { data, error } = await supabaseClient
     .from("clients")
     .select("id, profile_id, nome_empresa, responsavel, telefone, email, observacao, ativo, created_at")
+    .eq("ativo", true)
     .order("nome_empresa", { ascending: true });
   if (error) throw error;
   state.clients = data || [];
@@ -796,6 +846,14 @@ const handleRefresh = async () => {
   state.details.clear();
   try {
     await Promise.all([loadClients(), loadServices()]);
+    if (!state.clients.some((client) => client.id === state.selectedClientId)) {
+      state.selectedClientId = state.clients[0]?.id || null;
+      state.selectedServiceId = null;
+    }
+    if (state.selectedClientId && !state.services.some((service) => service.id === state.selectedServiceId)) {
+      const service = state.services.find((item) => item.client_id === state.selectedClientId);
+      state.selectedServiceId = service?.id || null;
+    }
     await renderCards();
     if (state.selectedServiceId) await fetchServiceDetails(state.selectedServiceId, true);
     renderAll();
@@ -944,6 +1002,67 @@ const handleResetPassword = async (event) => {
     setMessage(elements.passwordModalMessage, error.message || "Nao foi possivel redefinir a senha.", "error");
   } finally {
     setButtonLoading(button, false);
+  }
+};
+
+const handleDeleteClient = async () => {
+  const client = selectedClient();
+  if (!client) {
+    setMessage(elements.deleteClientMessage, "Selecione um cliente antes de excluir.", "error");
+    return;
+  }
+
+  const {
+    data: { session },
+  } = await supabaseClient.auth.getSession();
+
+  if (!session?.access_token) {
+    setMessage(elements.deleteClientMessage, "Sua sessao expirou. Entre novamente como administrador.", "error");
+    return;
+  }
+
+  setButtonLoading(elements.confirmDeleteClient, true, "Excluindo...");
+  setMessage(elements.deleteClientMessage, "Removendo cliente do portal...", "info");
+
+  try {
+    const response = await fetch("/api/delete-client-user", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${session.access_token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ client_id: client.id }),
+    });
+    const responseText = await response.text();
+    let result = null;
+    try {
+      result = responseText ? JSON.parse(responseText) : null;
+    } catch (_error) {
+      result = null;
+    }
+    if (response.status === 404) {
+      throw new Error("A API de exclusao de cliente nao esta rodando. Use a Vercel publicada ou rode com vercel dev.");
+    }
+    if (!response.ok) throw new Error(result?.error || responseText || "Nao foi possivel excluir o cliente.");
+
+    state.details.clear();
+    state.selectedClientId = null;
+    state.selectedServiceId = null;
+    await Promise.all([loadClients(), loadServices()]);
+    state.selectedClientId = state.clients[0]?.id || null;
+    if (state.selectedClientId) {
+      const service = state.services.find((item) => item.client_id === state.selectedClientId);
+      state.selectedServiceId = service?.id || null;
+      if (state.selectedServiceId) await fetchServiceDetails(state.selectedServiceId, true);
+    }
+    await renderCards();
+    renderAll();
+    closeDeleteClientModal();
+    setMessage(elements.mainMessage, `Cliente "${client.nome_empresa}" excluido do portal.`, "success");
+  } catch (error) {
+    setMessage(elements.deleteClientMessage, error.message || "Nao foi possivel excluir o cliente.", "error");
+  } finally {
+    setButtonLoading(elements.confirmDeleteClient, false);
   }
 };
 
@@ -1200,9 +1319,11 @@ elements.loginForm.addEventListener("submit", handleLogin);
 elements.logout.addEventListener("click", handleLogout);
 elements.refresh.addEventListener("click", handleRefresh);
 elements.openClientModal.addEventListener("click", openClientModal);
+elements.openDeleteClientModal.addEventListener("click", openDeleteClientModal);
 elements.openPasswordModal.addEventListener("click", openPasswordModal);
 elements.clientCreateForm.addEventListener("submit", handleCreateClient);
 elements.passwordResetForm.addEventListener("submit", handleResetPassword);
+elements.confirmDeleteClient.addEventListener("click", handleDeleteClient);
 elements.generatePassword.addEventListener("click", () => {
   setFieldValue(elements.clientCreateForm, "password", generatePassword());
 });
@@ -1221,7 +1342,12 @@ elements.clientSearch.addEventListener("input", () => {
   state.search = elements.clientSearch.value;
   renderClients();
 });
+elements.stepSort.addEventListener("change", () => {
+  state.stepSort = elements.stepSort.value;
+  renderSteps();
+});
 closeClientModalButtons.forEach((button) => button.addEventListener("click", closeClientModal));
+closeDeleteClientModalButtons.forEach((button) => button.addEventListener("click", closeDeleteClientModal));
 closePasswordModalButtons.forEach((button) => button.addEventListener("click", closePasswordModal));
 closeServiceModalButtons.forEach((button) => button.addEventListener("click", closeServiceModal));
 closeStepModalButtons.forEach((button) => button.addEventListener("click", closeStepModal));
@@ -1231,6 +1357,8 @@ document.addEventListener("keydown", (event) => {
   if (event.key !== "Escape") return;
   if (!elements.clientModal.hidden) {
     closeClientModal();
+  } else if (!elements.deleteClientModal.hidden) {
+    closeDeleteClientModal();
   } else if (!elements.passwordModal.hidden) {
     closePasswordModal();
   } else if (!elements.serviceModal.hidden) {
