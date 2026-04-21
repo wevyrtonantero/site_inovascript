@@ -1,10 +1,20 @@
 const siteSupabaseUrl = "https://iymaeroamjqsgmbyjjgd.supabase.co";
 const siteSupabaseKey = "sb_publishable_3LFkB8e4i4acUDdAKTKHlw_Z9vr4tjT";
 
+const recoveryParams = new URLSearchParams(window.location.hash.slice(1) || window.location.search.slice(1));
+const isRecoveryLink =
+  recoveryParams.get("type") === "recovery" ||
+  recoveryParams.has("access_token") ||
+  recoveryParams.has("code");
+
+if (isRecoveryLink && !window.location.pathname.endsWith("/reset-senha.html")) {
+  window.location.replace(`./reset-senha.html${window.location.search}${window.location.hash}`);
+}
+
 const siteSupabase = window.supabase.createClient(siteSupabaseUrl, siteSupabaseKey, {
   auth: {
     autoRefreshToken: true,
-    detectSessionInUrl: true,
+    detectSessionInUrl: !isRecoveryLink,
     persistSession: true,
   },
 });
