@@ -54,6 +54,7 @@ const elements = {
   passwordResetForm: document.querySelector("[data-password-reset-form]"),
   refresh: document.querySelector("[data-refresh-admin]"),
   resetAccess: document.querySelector("[data-reset-access]"),
+  restoreClients: document.querySelector("[data-restore-clients]"),
   selectedClientMeta: document.querySelector("[data-selected-client-meta]"),
   selectedClientName: document.querySelector("[data-selected-client-name]"),
   serviceForm: document.querySelector("[data-service-form]"),
@@ -865,6 +866,69 @@ const handleRefresh = async () => {
   }
 };
 
+const handleRestoreClients = async () => {
+  const confirmed = window.confirm(
+    "Restaurar clientes excluidos? Isso reativa clientes, acessos e servicos desativados por exclusao."
+  );
+  if (!confirmed) return;
+
+  const {
+    data: { session },
+  } = await supabaseClient.auth.getSession();
+
+  if (!session?.access_token) {
+    setMessage(elements.mainMessage, "Sua sessao expirou. Entre novamente como administrador.", "error");
+    return;
+  }
+
+  setButtonLoading(elements.restoreClients, true, "Restaurando...");
+  setMessage(elements.mainMessage, "Restaurando clientes excluidos...", "info");
+
+  try {
+    const response = await fetch("/api/restore-clients", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${session.access_token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({}),
+    });
+    const responseText = await response.text();
+    let result = null;
+    try {
+      result = responseText ? JSON.parse(responseText) : null;
+    } catch (_error) {
+      result = null;
+    }
+    if (response.status === 404) {
+      throw new Error("A API de restauracao ainda nao esta publicada. Aguarde a Vercel finalizar o deploy.");
+    }
+    if (!response.ok) throw new Error(result?.error || responseText || "Nao foi possivel restaurar clientes.");
+
+    state.details.clear();
+    await Promise.all([loadClients(), loadServices()]);
+    if (!state.clients.some((client) => client.id === state.selectedClientId)) {
+      state.selectedClientId = state.clients[0]?.id || null;
+    }
+    if (state.selectedClientId) {
+      const service = state.services.find((item) => item.client_id === state.selectedClientId);
+      state.selectedServiceId = service?.id || null;
+      if (state.selectedServiceId) await fetchServiceDetails(state.selectedServiceId, true);
+    }
+    await renderCards();
+    renderAll();
+    setMessage(
+      elements.mainMessage,
+      `Restaurado: ${result?.restored_clients || 0} cliente(s), ${result?.restored_projects || 0} servico(s).`,
+      "success"
+    );
+  } catch (error) {
+    setMessage(elements.mainMessage, error.message || "Nao foi possivel restaurar clientes.", "error");
+  } finally {
+    setButtonLoading(elements.restoreClients, false);
+  }
+};
+
 const handleCreateClient = async (event) => {
   event.preventDefault();
   const button = elements.clientCreateForm.querySelector('button[type="submit"]');
@@ -1318,6 +1382,7 @@ const bootstrap = async () => {
 elements.loginForm.addEventListener("submit", handleLogin);
 elements.logout.addEventListener("click", handleLogout);
 elements.refresh.addEventListener("click", handleRefresh);
+elements.restoreClients.addEventListener("click", handleRestoreClients);
 elements.openClientModal.addEventListener("click", openClientModal);
 elements.openDeleteClientModal.addEventListener("click", openDeleteClientModal);
 elements.openPasswordModal.addEventListener("click", openPasswordModal);
