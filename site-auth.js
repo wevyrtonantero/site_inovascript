@@ -14,6 +14,7 @@ const loginForm = document.querySelector("[data-client-login-form]");
 const loginMessage = document.querySelector("[data-client-login-message]");
 const openLoginButtons = document.querySelectorAll("[data-open-client-login]");
 const closeLoginButtons = document.querySelectorAll("[data-close-client-login]");
+const forgotPasswordButton = document.querySelector("[data-forgot-password]");
 
 if (loginModal && loginForm) {
   const setMessage = (text, tone = "info") => {
@@ -138,5 +139,32 @@ if (loginModal && loginForm) {
     window.setTimeout(() => {
       redirectToPortal();
     }, 320);
+  });
+
+  forgotPasswordButton?.addEventListener("click", async () => {
+    const emailInput = loginForm.querySelector('input[name="email"]');
+    const email = String(emailInput?.value || "").trim();
+
+    if (!email) {
+      setMessage("Digite seu e-mail de login e clique em esqueci minha senha novamente.", "error");
+      emailInput?.focus();
+      return;
+    }
+
+    forgotPasswordButton.disabled = true;
+    setMessage("Enviando link de redefinicao para seu e-mail...", "info");
+
+    const { error } = await siteSupabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/reset-senha.html`,
+    });
+
+    forgotPasswordButton.disabled = false;
+
+    if (error) {
+      setMessage(error.message || "Nao foi possivel enviar o link de redefinicao.", "error");
+      return;
+    }
+
+    setMessage("Se este e-mail estiver cadastrado, voce recebera um link para criar uma nova senha.", "success");
   });
 }

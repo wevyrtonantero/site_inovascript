@@ -24,6 +24,7 @@ const elements = {
   clientPerson: document.querySelector("[data-client-person]"),
   feedbackForm: document.querySelector("[data-feedback-form]"),
   feedbackList: document.querySelector("[data-feedback-list]"),
+  forgotPassword: document.querySelector("[data-forgot-password]"),
   loading: document.querySelector("[data-client-loading]"),
   loginForm: document.querySelector("[data-client-login-form]"),
   loginMessage: document.querySelector("[data-client-login-message]"),
@@ -453,6 +454,33 @@ const handleLogin = async (event) => {
   }
 };
 
+const handleForgotPassword = async () => {
+  const emailInput = elements.loginForm.querySelector('input[name="email"]');
+  const email = String(emailInput?.value || "").trim();
+
+  if (!email) {
+    setMessage(elements.loginMessage, "Digite seu e-mail de login antes de pedir a redefinicao.", "error");
+    emailInput?.focus();
+    return;
+  }
+
+  setButtonLoading(elements.forgotPassword, true, "Enviando...");
+  setMessage(elements.loginMessage, "Enviando link de redefinicao para seu e-mail...", "info");
+
+  const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
+    redirectTo: `${window.location.origin}/reset-senha.html`,
+  });
+
+  setButtonLoading(elements.forgotPassword, false);
+
+  if (error) {
+    setMessage(elements.loginMessage, error.message || "Nao foi possivel enviar o link de redefinicao.", "error");
+    return;
+  }
+
+  setMessage(elements.loginMessage, "Se este e-mail estiver cadastrado, voce recebera um link para criar uma nova senha.", "success");
+};
+
 const handleRefresh = async () => {
   setButtonLoading(elements.refresh, true, "Atualizando...");
   state.details.clear();
@@ -533,6 +561,7 @@ const bootstrap = async () => {
 };
 
 elements.loginForm.addEventListener("submit", handleLogin);
+elements.forgotPassword.addEventListener("click", handleForgotPassword);
 elements.refresh.addEventListener("click", handleRefresh);
 elements.logout.addEventListener("click", handleLogout);
 elements.feedbackForm.addEventListener("submit", handleFeedbackSubmit);

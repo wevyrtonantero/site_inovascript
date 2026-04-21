@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Redefinir senha | InovaScript</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./admin.css" />
+  </head>
+  <body class="admin-page reset-page">
+    <main class="admin-login">
+      <section class="admin-login-card reset-card">
+        <p class="admin-kicker">Portal InovaScript</p>
+        <h1>Criar nova senha</h1>
+        <p>Use o link recebido por e-mail para definir uma nova senha de acesso ao portal.</p>
+
+        <div class="admin-message" data-reset-message hidden></div>
+
+        <form data-reset-password-form>
+          <label>
+            <span>Nova senha</span>
+            <input type="password" name="password" autocomplete="new-password" minlength="6" required />
+          </label>
+          <label>
+            <span>Confirmar nova senha</span>
+            <input type="password" name="password_confirm" autocomplete="new-password" minlength="6" required />
+          </label>
+          <button class="admin-button admin-button-primary" type="submit">Salvar nova senha</button>
+        </form>
+
+        <a href="./index.html">Voltar ao site</a>
+      </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./reset-senha.js"></script>
+  </body>
+</html>

@@ -93,6 +93,9 @@
                 <p data-selected-client-meta>Cadastre ou selecione um cliente na lateral.</p>
               </div>
               <div class="workspace-actions">
+                <button class="admin-button admin-button-secondary" type="button" data-open-password-modal>
+                  Redefinir senha
+                </button>
                 <button class="admin-button admin-button-secondary" type="button" data-open-service-modal>
                   Novo servico
                 </button>
@@ -138,7 +141,7 @@
                     Editar servico atual
                   </button>
                   <button class="admin-button admin-button-danger" type="button" data-archive-service>
-                    Arquivar servico
+                    Apagar servico do portal
                   </button>
                 </div>
               </article>
@@ -234,6 +237,35 @@
           <button class="admin-button admin-button-primary" type="submit">Criar acesso</button>
         </form>
         <div class="created-access" data-created-access hidden></div>
+      </section>
+    </div>
+
+    <div class="admin-modal" data-password-modal hidden>
+      <div class="admin-modal-backdrop" data-close-password-modal></div>
+      <section class="admin-modal-card">
+        <button class="admin-modal-close" type="button" data-close-password-modal>x</button>
+        <div>
+          <p class="admin-kicker">Acesso do cliente</p>
+          <h2>Redefinir senha</h2>
+          <p data-password-client-info>Selecione um cliente para gerar uma nova senha.</p>
+        </div>
+        <div class="admin-message" data-password-modal-message hidden></div>
+        <form class="admin-form" data-password-reset-form>
+          <div class="password-row">
+            <label>
+              <span>Nova senha</span>
+              <input type="text" name="password" autocomplete="off" required />
+            </label>
+            <button class="admin-button admin-button-secondary" type="button" data-generate-reset-password>
+              Gerar senha
+            </button>
+          </div>
+          <p class="form-hint">
+            Esta acao troca a senha do usuario no Supabase. Depois envie a senha nova ao cliente por um canal seguro.
+          </p>
+          <button class="admin-button admin-button-primary" type="submit">Salvar nova senha</button>
+        </form>
+        <div class="created-access" data-reset-access hidden></div>
       </section>
     </div>
 

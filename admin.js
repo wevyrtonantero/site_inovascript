@@ -29,6 +29,7 @@ const elements = {
   createdAccess: document.querySelector("[data-created-access]"),
   feedbackList: document.querySelector("[data-feedback-list]"),
   generatePassword: document.querySelector("[data-generate-password]"),
+  generateResetPassword: document.querySelector("[data-generate-reset-password]"),
   loading: document.querySelector("[data-admin-loading]"),
   login: document.querySelector("[data-admin-login]"),
   loginForm: document.querySelector("[data-admin-login-form]"),
@@ -38,9 +39,15 @@ const elements = {
   archiveService: document.querySelector("[data-archive-service]"),
   editService: document.querySelector("[data-edit-service]"),
   openClientModal: document.querySelector("[data-open-client-modal]"),
+  openPasswordModal: document.querySelector("[data-open-password-modal]"),
   pageSubtitle: document.querySelector("[data-page-subtitle]"),
   pageTitle: document.querySelector("[data-page-title]"),
+  passwordClientInfo: document.querySelector("[data-password-client-info]"),
+  passwordModal: document.querySelector("[data-password-modal]"),
+  passwordModalMessage: document.querySelector("[data-password-modal-message]"),
+  passwordResetForm: document.querySelector("[data-password-reset-form]"),
   refresh: document.querySelector("[data-refresh-admin]"),
+  resetAccess: document.querySelector("[data-reset-access]"),
   selectedClientMeta: document.querySelector("[data-selected-client-meta]"),
   selectedClientName: document.querySelector("[data-selected-client-name]"),
   serviceForm: document.querySelector("[data-service-form]"),
@@ -60,6 +67,7 @@ const elements = {
 };
 
 const closeClientModalButtons = document.querySelectorAll("[data-close-client-modal]");
+const closePasswordModalButtons = document.querySelectorAll("[data-close-password-modal]");
 const closeServiceModalButtons = document.querySelectorAll("[data-close-service-modal]");
 const closeStepModalButtons = document.querySelectorAll("[data-close-step-modal]");
 const closeUpdateModalButtons = document.querySelectorAll("[data-close-update-modal]");
@@ -181,6 +189,30 @@ const closeClientModal = () => {
   elements.clientModal.hidden = true;
   document.body.classList.remove("modal-open");
   setMessage(elements.clientModalMessage, "");
+};
+
+const openPasswordModal = () => {
+  const client = selectedClient();
+  if (!client) {
+    setMessage(elements.mainMessage, "Selecione um cliente antes de redefinir a senha.", "error");
+    return;
+  }
+
+  elements.passwordClientInfo.textContent = `Cliente: ${client.nome_empresa} - login ${client.email || "sem e-mail"}`;
+  elements.passwordResetForm.reset();
+  setFieldValue(elements.passwordResetForm, "password", generatePassword());
+  elements.resetAccess.hidden = true;
+  elements.resetAccess.innerHTML = "";
+  setMessage(elements.passwordModalMessage, "");
+  elements.passwordModal.hidden = false;
+  document.body.classList.add("modal-open");
+  window.setTimeout(() => elements.passwordResetForm.querySelector('input[name="password"]')?.focus(), 40);
+};
+
+const closePasswordModal = () => {
+  elements.passwordModal.hidden = true;
+  document.body.classList.remove("modal-open");
+  setMessage(elements.passwordModalMessage, "");
 };
 
 const openServiceModal = (mode = "new") => {
@@ -467,8 +499,19 @@ const renderServiceSummary = () => {
             : `<span class="summary-chip">Publicado nao liberado</span>`
         }
       </div>
+      <div class="summary-actions">
+        <button class="admin-button admin-button-secondary" type="button" data-summary-edit-service>Editar servico</button>
+        <button class="admin-button admin-button-danger" type="button" data-summary-archive-service>Apagar do portal</button>
+      </div>
     </div>
   `;
+
+  elements.serviceSummary
+    .querySelector("[data-summary-edit-service]")
+    ?.addEventListener("click", () => openServiceModal("edit"));
+  elements.serviceSummary
+    .querySelector("[data-summary-archive-service]")
+    ?.addEventListener("click", handleArchiveService);
 };
 
 const renderSteps = () => {
@@ -828,6 +871,73 @@ const handleCreateClient = async (event) => {
   }
 };
 
+const handleResetPassword = async (event) => {
+  event.preventDefault();
+  const client = selectedClient();
+  if (!client) {
+    setMessage(elements.passwordModalMessage, "Selecione um cliente antes de redefinir a senha.", "error");
+    return;
+  }
+
+  const button = elements.passwordResetForm.querySelector('button[type="submit"]');
+  const formData = new FormData(elements.passwordResetForm);
+  const password = String(formData.get("password") || "");
+  if (password.length < 6) {
+    setMessage(elements.passwordModalMessage, "A nova senha precisa ter pelo menos 6 caracteres.", "error");
+    return;
+  }
+
+  const {
+    data: { session },
+  } = await supabaseClient.auth.getSession();
+
+  if (!session?.access_token) {
+    setMessage(elements.passwordModalMessage, "Sua sessao expirou. Entre novamente como administrador.", "error");
+    return;
+  }
+
+  setButtonLoading(button, true, "Alterando...");
+  setMessage(elements.passwordModalMessage, "Atualizando senha do cliente...", "info");
+
+  try {
+    const response = await fetch("/api/reset-client-password", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${session.access_token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        client_id: client.id,
+        password,
+      }),
+    });
+    const responseText = await response.text();
+    let result = null;
+    try {
+      result = responseText ? JSON.parse(responseText) : null;
+    } catch (_error) {
+      result = null;
+    }
+    if (response.status === 404) {
+      throw new Error("A API de redefinicao de senha nao esta rodando. Use a Vercel publicada ou rode com vercel dev.");
+    }
+    if (!response.ok) throw new Error(result?.error || responseText || "Nao foi possivel redefinir a senha.");
+
+    elements.resetAccess.hidden = false;
+    elements.resetAccess.innerHTML = `
+      <strong>Senha redefinida com sucesso.</strong>
+      <span>Cliente: ${escapeHtml(client.nome_empresa)}</span>
+      <span>Login: ${escapeHtml(result?.client?.email || client.email || "")}</span>
+      <span>Nova senha: ${escapeHtml(password)}</span>
+    `;
+    setMessage(elements.passwordModalMessage, "Senha atualizada. Envie a nova senha ao cliente por um canal seguro.", "success");
+  } catch (error) {
+    setMessage(elements.passwordModalMessage, error.message || "Nao foi possivel redefinir a senha.", "error");
+  } finally {
+    setButtonLoading(button, false);
+  }
+};
+
 const handleServiceSave = async (event) => {
   event.preventDefault();
   if (!state.selectedClientId) {
@@ -883,21 +993,21 @@ const handleServiceSave = async (event) => {
 const handleArchiveService = async () => {
   const service = selectedService();
   if (!service) {
-    setMessage(elements.mainMessage, "Selecione um servico para arquivar.", "error");
+    setMessage(elements.mainMessage, "Selecione um servico para apagar do portal.", "error");
     return;
   }
 
   const confirmed = window.confirm(
-    `Arquivar o servico "${service.nome}"? Ele sai da tela do cliente, mas o historico fica preservado.`
+    `Apagar o servico "${service.nome}" do portal? Ele sai da tela do cliente e dos servicos ativos, mas o historico fica preservado no banco.`
   );
   if (!confirmed) return;
 
-  setButtonLoading(elements.archiveService, true, "Arquivando...");
+  setButtonLoading(elements.archiveService, true, "Apagando...");
   const { error } = await supabaseClient.from("projects").update({ ativo: false }).eq("id", service.id);
   setButtonLoading(elements.archiveService, false);
 
   if (error) {
-    setMessage(elements.mainMessage, error.message || "Nao foi possivel arquivar o servico.", "error");
+    setMessage(elements.mainMessage, error.message || "Nao foi possivel apagar o servico do portal.", "error");
     return;
   }
 
@@ -911,7 +1021,7 @@ const handleArchiveService = async () => {
   await renderCards();
   renderAll();
   activateTab("resumo");
-  setMessage(elements.mainMessage, "Servico arquivado com sucesso.", "success");
+  setMessage(elements.mainMessage, "Servico apagado do portal com sucesso.", "success");
 };
 
 const handleStepSave = async (event) => {
@@ -1081,9 +1191,14 @@ elements.loginForm.addEventListener("submit", handleLogin);
 elements.logout.addEventListener("click", handleLogout);
 elements.refresh.addEventListener("click", handleRefresh);
 elements.openClientModal.addEventListener("click", openClientModal);
+elements.openPasswordModal.addEventListener("click", openPasswordModal);
 elements.clientCreateForm.addEventListener("submit", handleCreateClient);
+elements.passwordResetForm.addEventListener("submit", handleResetPassword);
 elements.generatePassword.addEventListener("click", () => {
   setFieldValue(elements.clientCreateForm, "password", generatePassword());
+});
+elements.generateResetPassword.addEventListener("click", () => {
+  setFieldValue(elements.passwordResetForm, "password", generatePassword());
 });
 elements.serviceForm.addEventListener("submit", handleServiceSave);
 elements.stepForm.addEventListener("submit", handleStepSave);
@@ -1098,6 +1213,7 @@ elements.clientSearch.addEventListener("input", () => {
   renderClients();
 });
 closeClientModalButtons.forEach((button) => button.addEventListener("click", closeClientModal));
+closePasswordModalButtons.forEach((button) => button.addEventListener("click", closePasswordModal));
 closeServiceModalButtons.forEach((button) => button.addEventListener("click", closeServiceModal));
 closeStepModalButtons.forEach((button) => button.addEventListener("click", closeStepModal));
 closeUpdateModalButtons.forEach((button) => button.addEventListener("click", closeUpdateModal));
@@ -1106,6 +1222,8 @@ document.addEventListener("keydown", (event) => {
   if (event.key !== "Escape") return;
   if (!elements.clientModal.hidden) {
     closeClientModal();
+  } else if (!elements.passwordModal.hidden) {
+    closePasswordModal();
   } else if (!elements.serviceModal.hidden) {
     closeServiceModal();
   } else if (!elements.stepModal.hidden) {
