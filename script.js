@@ -26,6 +26,7 @@ const translations = {
       process: "Como atuamos",
       case: "Case",
       contact: "Contato",
+      clientPortal: "Área do cliente",
       whatsapp: "WhatsApp",
     },
     hero: {
@@ -35,6 +36,7 @@ const translations = {
         "A InovaScript desenvolve soluções personalizadas para pequenas e médias empresas, sempre com foco industrial: controle de estoque, automação de etiquetas, manutenção, CRM, integrações fabris e sites profissionais.",
       ctaPrimary: "Falar no WhatsApp",
       ctaSecondary: "Ver soluções",
+      ctaPortal: "Acompanhar meu projeto",
       proofLabel: "Projeto industrial em operação",
       proofValue: "Fluxo completo com estoque, produção e automação de etiquetas",
       bullet1: "Começamos com videoconferência para entender o processo real",
@@ -114,6 +116,19 @@ const translations = {
       sitesDesc:
         "Presença digital séria, clara e alinhada à autoridade técnica da empresa para vender melhor.",
     },
+    portal: {
+      eyebrow: "Portal de acompanhamento",
+      title: "Seu cliente acompanha o projeto com login, cronograma e histórico claro.",
+      copy:
+        "Além de desenvolver sistemas, sites e automações, a InovaScript pode entregar um portal privado para acompanhamento da implantação. Cada cliente acessa seus serviços, vê percentual de andamento, links de preview, atualizações publicadas e conversa organizada por projeto.",
+      button: "Entrar no portal do cliente",
+      card1Title: "Cronograma visível",
+      card1Copy: "Etapas, status, previsão e justificativas sem troca perdida de mensagem.",
+      card2Title: "Links do projeto",
+      card2Copy: "Preview, ambiente publicado, anexos e atualizações em um só lugar.",
+      card3Title: "Conversa por serviço",
+      card3Copy: "Feedbacks ficam vinculados ao serviço certo, com resposta e status.",
+    },
     process: {
       eyebrow: "Como atuamos",
       title: "Começamos por videoconferência e desenhamos a solução em cima do processo real.",
@@ -157,6 +172,10 @@ const translations = {
       scope8: "Controle de estoque",
       scope9: "Automação da etiqueta",
     },
+    trusted: {
+      eyebrow: "Empresas que confiam",
+      title: "Empresas que acreditam no nosso trabalho",
+    },
     industry: {
       eyebrow: "Foco industrial",
       title:
@@ -190,6 +209,7 @@ const translations = {
     },
     footer: {
       copy: "Soluções personalizadas para indústria e empresas em crescimento.",
+      rights: "© 2026 InovaScript. Todos os direitos reservados.",
     },
   },
   en: {
@@ -212,6 +232,7 @@ const translations = {
       process: "Process",
       case: "Case",
       contact: "Contact",
+      clientPortal: "Client area",
       whatsapp: "WhatsApp",
     },
     hero: {
@@ -221,6 +242,7 @@ const translations = {
         "InovaScript develops custom solutions for small and midsize companies with an industrial mindset: inventory control, label automation, maintenance, CRM, factory workflow integrations and professional websites.",
       ctaPrimary: "Talk on WhatsApp",
       ctaSecondary: "View solutions",
+      ctaPortal: "Track my project",
       proofLabel: "Industrial project in operation",
       proofValue: "Full workflow with inventory, production and label automation",
       bullet1: "We start with a video call to understand the real process",
@@ -300,6 +322,19 @@ const translations = {
       sitesDesc:
         "A serious digital presence aligned with your technical authority so the company sells better.",
     },
+    portal: {
+      eyebrow: "Client tracking portal",
+      title: "Your client tracks the project with login, timeline and clear history.",
+      copy:
+        "Beyond building systems, websites and automations, InovaScript can deliver a private portal to track implementation. Each client accesses their services, progress percentage, preview links, published updates and project-based conversation.",
+      button: "Open client portal",
+      card1Title: "Visible timeline",
+      card1Copy: "Steps, status, forecast dates and justifications without lost message threads.",
+      card2Title: "Project links",
+      card2Copy: "Preview, published environment, attachments and updates in one organized place.",
+      card3Title: "Conversation by service",
+      card3Copy: "Feedback stays linked to the right service, with response and status.",
+    },
     process: {
       eyebrow: "How we work",
       title: "We start with a video call and design the solution around the real process.",
@@ -343,6 +378,10 @@ const translations = {
       scope8: "Inventory control",
       scope9: "Label automation",
     },
+    trusted: {
+      eyebrow: "Trusted by companies",
+      title: "Companies that believe in our work",
+    },
     industry: {
       eyebrow: "Industrial focus",
       title:
@@ -376,6 +415,7 @@ const translations = {
     },
     footer: {
       copy: "Custom solutions for industry and growing companies.",
+      rights: "© 2026 InovaScript. All rights reserved.",
     },
   },
 };

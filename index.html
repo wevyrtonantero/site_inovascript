@@ -52,7 +52,7 @@
               Tema escuro
             </button>
 
-            <button class="portal-nav-button" type="button" data-open-client-login>
+            <button class="portal-nav-button" type="button" data-open-client-login data-i18n="nav.clientPortal">
               Área do cliente
             </button>
 
@@ -113,7 +113,7 @@
               <a class="button button-secondary" href="#solucoes" data-i18n="hero.ctaSecondary">
                 Ver soluções
               </a>
-              <button class="button button-portal" type="button" data-open-client-login>
+              <button class="button button-portal" type="button" data-open-client-login data-i18n="hero.ctaPortal">
                 Acompanhar meu projeto
               </button>
             </div>
@@ -294,15 +294,15 @@
       <section class="section client-portal-section" id="portal-cliente">
         <div class="container client-portal-grid">
           <div class="client-portal-copy reveal">
-            <p class="eyebrow">Portal de acompanhamento</p>
-            <h2>Seu cliente acompanha o projeto com login, cronograma e histórico claro.</h2>
-            <p>
+            <p class="eyebrow" data-i18n="portal.eyebrow">Portal de acompanhamento</p>
+            <h2 data-i18n="portal.title">Seu cliente acompanha o projeto com login, cronograma e histórico claro.</h2>
+            <p data-i18n="portal.copy">
               Além de desenvolver sistemas, sites e automações, a InovaScript pode
               entregar um portal privado para acompanhamento da implantação. Cada
               cliente acessa seus serviços, vê percentual de andamento, links de
               preview, atualizações publicadas e conversa organizada por projeto.
             </p>
-            <button class="button button-portal" type="button" data-open-client-login>
+            <button class="button button-portal" type="button" data-open-client-login data-i18n="portal.button">
               Entrar no portal do cliente
             </button>
           </div>
@@ -310,18 +310,18 @@
           <div class="client-portal-panel reveal">
             <article>
               <span>01</span>
-              <strong>Cronograma visível</strong>
-              <p>Etapas, status, previsão e justificativas sem troca perdida de mensagem.</p>
+              <strong data-i18n="portal.card1Title">Cronograma visível</strong>
+              <p data-i18n="portal.card1Copy">Etapas, status, previsão e justificativas sem troca perdida de mensagem.</p>
             </article>
             <article>
               <span>02</span>
-              <strong>Links do projeto</strong>
-              <p>Preview, ambiente publicado, anexos e atualizações em um só lugar.</p>
+              <strong data-i18n="portal.card2Title">Links do projeto</strong>
+              <p data-i18n="portal.card2Copy">Preview, ambiente publicado, anexos e atualizações em um só lugar.</p>
             </article>
             <article>
               <span>03</span>
-              <strong>Conversa por serviço</strong>
-              <p>Feedbacks ficam vinculados ao serviço certo, com resposta e status.</p>
+              <strong data-i18n="portal.card3Title">Conversa por serviço</strong>
+              <p data-i18n="portal.card3Copy">Feedbacks ficam vinculados ao serviço certo, com resposta e status.</p>
             </article>
           </div>
         </div>
@@ -436,6 +436,20 @@
         </div>
       </section>
 
+      <section class="trusted-section">
+        <div class="container trusted-inner reveal">
+          <div>
+            <p class="eyebrow eyebrow-dark" data-i18n="trusted.eyebrow">Empresas que confiam</p>
+            <h2 data-i18n="trusted.title">Empresas que acreditam no nosso trabalho</h2>
+          </div>
+          <div class="trusted-logos" aria-label="Empresas que acreditam na InovaScript">
+            <article class="trusted-logo-card">
+              <img src="./assets/logo-safisa.svg" alt="SAFISA" loading="lazy" />
+            </article>
+          </div>
+        </div>
+      </section>
+
       <section class="industry-band">
         <div class="industry-image" aria-hidden="true"></div>
         <div class="industry-overlay"></div>
@@ -542,6 +556,10 @@
             </div>
           </div>
         </div>
+
+        <p class="footer-copyline" data-i18n="footer.rights">
+          © 2026 InovaScript. Todos os direitos reservados.
+        </p>
       </div>
     </footer>
 
